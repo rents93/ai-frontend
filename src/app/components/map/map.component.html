@@ -1,0 +1,92 @@
+<h3>Mappa Posizioni</h3>
+<div id="mapid" (leafletMapReady)="onMapReady($event)" style="height: 400px; width: 75%;"></div>
+ <!-- <mat-card-content>
+  Map
+  <div id="chartContainer" style="height: 70px; width: 100%;"></div>
+  <div class="map" leaflet style="height: 45vh;" (leafletMapReady)="onMapReady($event)" [leafletOptions]="options" [leafletLayers]="layers">
+  </div>
+
+</mat-card-content> -->
+<!-- <app-datepicker (startDate)="storeSD($event)" (endDate)="storeED($event)"></app-datepicker> -->
+<div style="width:80%; margin:auto">
+    <label>Seleziona periodo:</label>
+    <mat-form-field>
+        <input matInput [max]="endDate" [(ngModel)]="startDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="StartDate">
+        <owl-date-time #dt1 [firstDayOfWeek]="1"></owl-date-time>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [min]="startDate" [(ngModel)]="endDate" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" placeholder="EndDate">
+        <owl-date-time #dt2 [firstDayOfWeek]="1"></owl-date-time>
+      </mat-form-field>
+      <button mat-button [matMenuTriggerFor]="menu">Seleziona utenti</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+            <mat-checkbox>Tutti</mat-checkbox>
+        </button>
+        <button mat-menu-item>
+            <mat-checkbox>Nessuno</mat-checkbox>
+        </button>
+        <button mat-menu-item *ngFor="let user of Users">
+          <mat-checkbox>{{user}}</mat-checkbox>
+        </button>
+      </mat-menu>     
+</div>
+
+
+<!-- ci sta fare la richiesta al server solo quando si espandono i campi, non ad ogni modifica -->
+
+<!-- <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>Item 1</button>
+  <button mat-menu-item>Item 2</button>
+</mat-menu> -->
+<!-- <mat-card-content>
+  Stard Date:
+  <input [max]="endDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Date Time">
+  <owl-date-time #dt1 [firstDayOfWeek]="1"></owl-date-time>
+
+  End Date:
+  <input [min]="startDate" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" placeholder="Date Time">
+  <owl-date-time #dt2 [firstDayOfWeek]="1"></owl-date-time>
+</mat-card-content> -->
+  
+<!-- 
+  <input class="center" 
+    [max]="endDate"
+    [owlDateTimeTrigger]="dt1" 
+    [owlDateTime]="dt1">
+  <owl-date-time #dt1></owl-date-time>
+
+  End Date:
+
+  <input class="center" 
+    [min]="startDate"
+    [owlDateTimeTrigger]="dt2" 
+    [owlDateTime]="dt2">
+  <owl-date-time #dt2></owl-date-time> -->
+
+
+<!-- <div>
+  <mat-list>
+    <mat-list-item>
+      Vertice 1
+      <mat-form-field>
+        <input matInput #v1lat type="number" placeholder="lat" step="0.000001" min="-90.000000" max="90.000000">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput #v1long type="number" placeholder="long" step="0.000001" min="-180.000000" max="180.000000">
+      </mat-form-field>
+    </mat-list-item>
+    <mat-list-item>
+      Vertice 2
+      <mat-form-field>
+        <input matInput #v2lat type="number" placeholder="lat" step="0.000001" min="-90.000000" max="90.000000">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput #v2long type="number" placeholder="long" step="0.000001" min="-180.000000" max="180.000000">
+      </mat-form-field>
+    </mat-list-item>
+  </mat-list>
+  <button (click)="onSelect(v1lat.value, v1long.value, v2lat.value, v2long.value)" mat-button>Visualizza posizioni!</button>
+</div> -->
+

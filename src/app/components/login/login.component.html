@@ -1,0 +1,17 @@
+<form [formGroup]="loginForm" (ngSubmit)="loginFormSubmit()">
+  <mat-form-field>
+    <input type="text" matInput placeholder="Username" formControlName="username" pattern="^[a-zA-Z0-9_.-]*$" required>
+  </mat-form-field>  
+  
+  <mat-form-field>
+    <input type="password" matInput placeholder="Password" formControlName="password" required>
+  </mat-form-field> 
+
+  <div class="button-row">
+    <button type="submit" mat-raised-button color="primary" [disabled]='loginForm.invalid || loading'>Login</button>
+  </div>
+</form>
+
+<p *ngIf="errorMessage" class="error">
+  {{errorMessage}}
+</p>
