@@ -9,14 +9,14 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { MapComponent } from './components/map/map.component';
 import { CustomMaterialModule } from './/material.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module'
 import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { LoginService } from './services/login.service';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ArchivesComponent } from './components/archives/archives.component';
-
+import { JwtInterceptor } from './services/interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -46,7 +46,8 @@ import { ArchivesComponent } from './components/archives/archives.component';
     OwlNativeDateTimeModule,
   ],
   providers: [
-    LoginService
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    LoginService,
   ],
   bootstrap: [AppComponent]
 })

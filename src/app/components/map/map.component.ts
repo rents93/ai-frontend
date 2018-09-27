@@ -21,13 +21,6 @@ export class MapComponent implements OnInit {
   endDate = new Date();
   Users : String[];
 
-  myIcon = L.icon({
-    iconSize: [ 25, 41 ],
-    iconAnchor: [ 13, 41 ],
-    iconUrl: 'assets/marker-icon.png',
-    shadowUrl: 'assets/marker-shadow.png'
-  });
-
   constructor(dateTimeAdapter: DateTimeAdapter<any>,
                private mapService: MapService,
               ) {
@@ -48,7 +41,6 @@ export class MapComponent implements OnInit {
 
     this.initializeMap();
 
-
     let markerLayers = [];
     markerLayers[0] = L.circle([45.076397, 7.657036], {radius: 1000, color: 'white'});
     markerLayers[1] = L.circle([45.074398, 7.657034], {radius: 500, color: 'red'});
@@ -57,10 +49,10 @@ export class MapComponent implements OnInit {
     // add all layers as a single array to layer
     let layerOfMarkers : L.Layer = L.layerGroup(markerLayers);
     this.mymap.addLayer(layerOfMarkers);
-    // this.mapService.getUsers()
-    //             .subscribe((data) =>{
-    //                 this.Users = data;
-    //             });            
+    this.mapService.getUsers()
+                .subscribe((data) =>{
+                    this.Users = data;
+                });            
  }
 
 

@@ -44,7 +44,7 @@ export class AuthService {
         
         postObs.subscribe(
             (response) =>{
-                localStorage.setItem('ai-token', response.access_token);
+                window.localStorage.setItem('ai-token', response.access_token);
             });
             
         return postObs;
@@ -52,7 +52,7 @@ export class AuthService {
 
     logout() {
         // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
+        localStorage.removeItem('ai-token');
     }
 
     ngOnDestroy(): void {
