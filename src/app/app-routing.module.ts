@@ -5,12 +5,14 @@ import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { ArchivesComponent } from './components/archives/archives.component';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/map', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'map', component: MapComponent, canActivate: [AuthGuardService] },
   { path: 'login', component: LoginComponent },
   { path: 'archives', component: ArchivesComponent, canActivate: [AuthGuardService]  },
+  { path: 'home', component: HomeComponent, canActivate:[AuthGuardService] },
   { path: '**', component: PageNotFoundComponent }
 ]
 

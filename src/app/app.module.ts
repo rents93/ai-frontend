@@ -17,6 +17,10 @@ import { LoginService } from './services/login.service';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ArchivesComponent } from './components/archives/archives.component';
 import { JwtInterceptor } from './services/interceptors/jwt.interceptor';
+import { HomeComponent } from './components/home/home.component';
+import { SignupComponent } from './components/signup/signup.component';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
 
 @NgModule({
   declarations: [
@@ -26,6 +30,8 @@ import { JwtInterceptor } from './services/interceptors/jwt.interceptor';
     LoginComponent,
     PageNotFoundComponent,
     ArchivesComponent,
+    HomeComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +53,7 @@ import { JwtInterceptor } from './services/interceptors/jwt.interceptor';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    JwtHelperService,
     LoginService,
   ],
   bootstrap: [AppComponent]
