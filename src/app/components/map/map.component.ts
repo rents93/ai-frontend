@@ -17,6 +17,8 @@ export class MapComponent implements OnInit {
     zoom: 13
   }
 
+  cacchio;
+
   startDate = new Date();
   endDate = new Date();
   Users : String[];
