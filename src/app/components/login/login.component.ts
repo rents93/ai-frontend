@@ -23,7 +23,8 @@ export class LoginComponent implements OnInit {
     });
 
     // reset login status
-    this.authService.logout();
+    //PERCHE MAI DOVREI FARE LOGOUT NEL CARICAMENTO DELLA PAGINA
+    // this.authService.logout();
   }
 
   loginFormSubmit(): void{

@@ -9,7 +9,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 export class HomeComponent implements OnInit {
 
-  nome_utente: String;
+  nome_utente: String = "generic_user";
   token;
 
   constructor() { }
@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
     const helper = new JwtHelperService();
     this.token = helper.decodeToken(window.localStorage.getItem('ai-token'));
     console.log(this.token);
-    // this.nome_utente = this.token.user_name;
+    this.nome_utente = this.token.user_name;
   }
 
 }
