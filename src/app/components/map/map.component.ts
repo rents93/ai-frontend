@@ -29,7 +29,6 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
 
-    
     this.mymap = L.map('mapid', this.mapOptions);
 
     let layerbase = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -63,23 +62,6 @@ export class MapComponent implements OnInit {
     this.mymap.on('moveend', (e : LeafletMouseEvent) => {
       console.log("Move event");
     });
-    // Creating markers
-    var hydMarker = new L.Marker([45.075388, 7.657036]);
-    var vskpMarker = new L.Marker([45.075388, 7.657034]);
-    var vjwdMarker = new L.Marker([45.075387, 7.657035]);
-    
-    // // Creating latlng object
-    // latlngs : L.latLng[] = [
-    //    new L.LatLng([45.075387, 7.657035]),
-    //    [45.075386, 7.657034],
-    //    [45.075386, 7.657036]
-    // ];
-    // // Creating a polygon
-    // var polygon = L.polygon(latlngs, {color: 'red'});
-    
-    // Creating layer group
-    var punti = L.layerGroup([hydMarker, vskpMarker, vjwdMarker/*, polygon*/]);
-    punti.addTo(this.mymap);    // Adding layer group to map
   }
 
   onSelect(v1lat: number, v1long: number, v2lat: number, v2long: number): void {
