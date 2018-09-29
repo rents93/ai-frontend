@@ -16,10 +16,20 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { LoginService } from './services/login.service';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ArchivesComponent } from './components/archives/archives.component';
-import { JwtInterceptor } from './services/interceptors/jwt.interceptor';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { HomeComponent } from './components/home/home.component';
 import { SignupComponent } from './components/signup/signup.component';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthGuard } from './guards/auth.guard';
+import { NoAuthGuard } from './guards/no-auth.guard';
+import { JwtService } from './services/jwt.service';
+import { MapService } from './services/map.service';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { JwtModule } from '@auth0/angular-jwt';
+
+// config JwtHelper
+export function tokenGetter(){
+  return localStorage.getItem('ai-token');
+}
 
 
 @NgModule({
@@ -50,11 +60,21 @@ import { JwtHelperService } from '@auth0/angular-jwt';
     CustomMaterialModule,
     OwlDateTimeModule, 
     OwlNativeDateTimeModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter
+      }
+    })    
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    JwtHelperService,
     LoginService,
+    JwtService,
+    MapService,
+    ErrorInterceptor,
+    JwtInterceptor,
+    AuthGuard,
+    NoAuthGuard
   ],
   bootstrap: [AppComponent]
 })

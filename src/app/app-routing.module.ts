@@ -3,16 +3,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { MapComponent } from './components/map/map.component';
 import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { AuthGuardService } from './services/auth-guard.service';
+import { AuthGuard } from './guards/auth.guard';
 import { ArchivesComponent } from './components/archives/archives.component';
 import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'map', component: MapComponent, canActivate: [AuthGuardService] },
+  { path: '', redirectTo: 'home', canActivate: [AuthGuard], pathMatch: 'full' },
+  { path: 'map', component: MapComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'archives', component: ArchivesComponent, canActivate: [AuthGuardService]  },
-  { path: 'home', component: HomeComponent, canActivate:[AuthGuardService] },
+  { path: 'archives', component: ArchivesComponent, canActivate: [AuthGuard]  },
+  { path: 'home', component: HomeComponent, canActivate:[AuthGuard] },
   { path: '**', component: PageNotFoundComponent }
 ]
 
