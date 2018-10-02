@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LoginService } from '../../services/login.service';
 import { Router } from '@angular/router';
+import { JwtService } from '../../services/jwt.service';
 
 @Component({
   selector: 'nav',
@@ -14,6 +15,7 @@ export class NavComponent implements OnInit {
 
   title: String = 'GeoposApp';
   user: String;
+  islogged: boolean;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -21,10 +23,10 @@ export class NavComponent implements OnInit {
     );
     
   constructor(private breakpointObserver: BreakpointObserver, private loginService: LoginService,
-     private router: Router) {}
+     private router: Router, private jwtService: JwtService) {}
   
   ngOnInit() {
-    //mettere 
+    this.islogged = this.jwtService.ifLogged();
   }
 
   logout(){

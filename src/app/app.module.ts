@@ -22,9 +22,12 @@ import { SignupComponent } from './components/signup/signup.component';
 import { AuthGuard } from './guards/auth.guard';
 import { NoAuthGuard } from './guards/no-auth.guard';
 import { JwtService } from './services/jwt.service';
+import { SignupService } from './services/signup.service';
 import { MapService } from './services/map.service';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { JwtModule } from '@auth0/angular-jwt';
+import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
+
 
 // config JwtHelper
 export function tokenGetter(){
@@ -45,6 +48,7 @@ export function tokenGetter(){
   ],
   imports: [
     BrowserModule,
+    PasswordStrengthBarModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
@@ -74,7 +78,8 @@ export function tokenGetter(){
     ErrorInterceptor,
     JwtInterceptor,
     AuthGuard,
-    NoAuthGuard
+    NoAuthGuard,
+    SignupService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,10 +1,21 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { tokenGetter } from '../app.module';
 
 @Injectable()
 export class JwtService {
 
     constructor(private jwtHelperService: JwtHelperService) { }
+
+    ifLogged(){
+        let token = tokenGetter();
+        if(token && !this.ifTokenExpired(token)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     
     ifTokenExpired(token: string): boolean{
         let expireTime: number;

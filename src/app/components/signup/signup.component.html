@@ -1,47 +1,44 @@
-<form [formGroup]="signupForm" (ngSubmit)="signupFormSubmit()">
-  <mat-form-field>
-    <input type="email" matInput placeholder="Email" formControlName="email" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" email required>
-  </mat-form-field>
+<form >
+<!-- [formGroup]="signupForm" (ngSubmit)="signupFormSubmit()"> -->
 
+  
   <!-- <mat-form-field matTooltip="No special characters are allowed">
-    <input type="text" matInput placeholder="Username" formControlName="username" pattern="^[a-zA-Z0-9_.-]*$" required>
-  </mat-form-field> -->
-
-  <!-- <div *ngIf="registrationForm.get('username').status === 'PENDING'">
+    <input type="text" matInput placeholder="Username" formControlName="username" required pattern="^[a-zA-Z0-9_.-]*$">
+  </mat-form-field>
+  <br> -->
+  <!-- <div *ngIf="signupForm.controls.username.status === 'PENDING'"> -->
+  <div>
     Checking...
   </div>
-  <div *ngIf="registrationForm.get('username').status === 'VALID'">
-    😺 Username is available!
+  <div class="ok">
+  <!-- *ngIf="signupForm.controls.username.status === 'VALID'"> -->
+    Username available
   </div>
 
-  <div *ngIf="registrationForm.get('username').errors && registrationForm.get('username').errors.usernameTaken">
-    😢 Sorry, this username is already taken!
+  <div class="error" >
+  <!-- *ngIf="signupForm.controls.username.errors && signupForm.controls.username.errors.usernameTaken"> -->
+    Username already taken
   </div>
-  <br> -->
+  <br>
 
-  <!-- <p>
-  <mat-input-container matTooltip="Password length from 8 to 16">
-      <input type="password" id="pwd" matInput placeholder="Password" formControlName="password" minlength="8" maxlength="16" required>
-  </mat-input-container>
-  </p>
-  <ng2-password-strength-bar 
-            [passwordToCheck]="registrationForm.value.password"
-            [barLabel]="barLabel"
-            [barColors]="myColors">
-  </ng2-password-strength-bar>
-  <br> -->
+  <!-- <mat-form-field matTooltip="Password length from 8 to 16">
+    <input type="password" matInput placeholder="Password" formControlName="password"  required minlength="8" maxlength="16">
+  </mat-form-field> -->
+
+  <!-- <ng2-password-strength-bar 
+            [passwordToCheck]="signupForm.controls.password.value"
+            [barLabel]="startBarLabel"
+            [barColors]="strengthBarColors"
+            [strengthLabels]="strengthBarLabels">
+  </ng2-password-strength-bar> -->
+  <br>
   
-  <!-- <p>
-  <mat-input-container matTooltip="Confirm password must be equal to Password">
-      <input type="password" id="confirmpwd" matInput placeholder="Confirm Password" formControlName="confirmpassword" required validateEqual="password">
-  </mat-input-container>
-  </p>
-  <br> -->
-
-  <!-- <input type="checkbox" (click)="showHide()">Show Password -->
+  <!-- <mat-form-field matTooltip="Confirm password must be equal to Password">
+    <input type="password" matInput placeholder="Confirm Password" formControlName="passwordConfirm" required validateEqual="password">
+  </mat-form-field> -->
 
   <div class="button-row">
-    <button type="submit" mat-raised-button color="primary" [disabled]='signupForm.invalid || loading'>Sign up</button>
+    <button type="submit" mat-raised-button color="primary" [disabled]='signupForm.invalid'>Sign up</button>
   </div>
 
   <p *ngIf="errorMessage" class="error">
