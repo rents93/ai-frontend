@@ -4,7 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { retry, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class SignupService {
     basicUrl: String;
 

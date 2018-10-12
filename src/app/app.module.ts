@@ -19,6 +19,7 @@ import { ArchivesComponent } from './components/archives/archives.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { HomeComponent } from './components/home/home.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { UploadComponent } from './components/upload/upload.component';
 import { AuthGuard } from './guards/auth.guard';
 import { NoAuthGuard } from './guards/no-auth.guard';
 import { JwtService } from './services/jwt.service';
@@ -45,6 +46,7 @@ export function tokenGetter(){
     ArchivesComponent,
     HomeComponent,
     SignupComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,
