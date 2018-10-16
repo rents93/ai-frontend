@@ -1,4 +1,5 @@
 import {NgModule} from "@angular/core";
+import { MatFileUploadModule } from 'angular-material-fileupload';
 import { 
     MatMenuModule, 
     MatProgressSpinnerModule, 
@@ -12,7 +13,10 @@ import {
     MatListModule, 
     MatDatepickerModule, 
     MatCardModule,
-    MatCheckboxModule, } from '@angular/material';
+    MatCheckboxModule,
+    MatGridListModule,
+    MatTabsModule
+} from '@angular/material';
 
 @NgModule({
 imports: [
@@ -29,6 +33,9 @@ imports: [
     MatDatepickerModule, 
     MatCardModule,
     MatCheckboxModule,
+    MatGridListModule,
+    MatFileUploadModule,
+    MatTabsModule
 ],
 exports: [
     MatMenuModule, 
@@ -44,6 +51,9 @@ exports: [
     MatDatepickerModule, 
     MatCardModule,
     MatCheckboxModule,
+    MatGridListModule,
+    MatFileUploadModule,
+    MatTabsModule
 ],
 })
 export class CustomMaterialModule { }

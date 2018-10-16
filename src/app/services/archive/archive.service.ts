@@ -1,41 +1,47 @@
-// import { Injectable, OnDestroy } from '@angular/core';
-// import { HttpClient, HttpHeaders } from '@angular/common/http';
-// import { environment } from '../../../environments/environment';
-// import { Observable } from 'rxjs/Observable';
-// import { Archive } from '../../models/archive';
-// import { ResponseContentType, RequestOptions, RequestMethod } from '@angular/http';
-// import { Headers, Http} from '@angular/http';
-// import { saveAs } from 'file-saver/FileSaver';
-// import { NavigableArchive} from '../../models/navigablearchive';
-// import { Subscription } from 'rxjs/Subscription';
-// import { retry } from 'rxjs/operators';
+import { Injectable, OnDestroy } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs';
+import { Archive } from '../../models/archive';
+import { ResponseContentType, RequestOptions, RequestMethod } from '@angular/http';
+import { Headers, Http} from '@angular/http';
+import { saveAs } from 'file-saver/FileSaver';
+import { NavigableArchive} from '../../models/navigable-archive';
+import { Subscription } from 'rxjs';
+import { retry } from 'rxjs/operators';
 
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class ArchiveService implements OnDestroy{
+@Injectable({
+  providedIn: 'root'
+})
+export class ArchiveService implements OnDestroy{
 
-//   private subscription1: Subscription;
-//     private subscription2: Subscription;
+    private subscription1: Subscription;
+    private subscription2: Subscription;
 
-//     serverAddress : String = environment.API_URL+"/user";
-//     resourceAddress : String = environment.API_URL+"/user/archives";
-//     //resourceAddress : String = "http://localhost:3000/archives";
-//     ownArchiveParam : String = "?ownership=self";
-//     purchasedArchiveParam : String = "?ownership=purchased";
-//     constructor(private webclient : HttpClient, private http : Http) {
+    serverAddress : String;
+    archivesAddress : String;
+    ownedArchiveParam : String;
+    purchasedArchiveParam : String;
+    constructor(private http : HttpClient){ 
+        //private http : Http) {
 
-//     }
+    }
 
-//     getSelfArchives(page:number,size:number) : Observable<NavigableArchive>{
-//         return this.webclient.get<NavigableArchive>(this.resourceAddress+""+this.ownArchiveParam+"&page="+page+"&size="+size).pipe(retry(3));
-//         //return Observable.of([]);
-//     }
+    ngOnInit() {
+        this.serverAddress  = environment.API_URL+"/user";
+        this.archivesAddress  = environment.API_URL+"/user/archives";
+        this.ownedArchiveParam = "?ownership=self";
+        this.purchasedArchiveParam = "?ownership=purchased";
+    }
 
-//     getPurchasedArchives(page:number,size:number) : Observable<NavigableArchive>{
-//         return this.webclient.get<NavigableArchive>(this.resourceAddress+""+this.purchasedArchiveParam+"&page="+page+"&size="+size).pipe(retry(3));
-//         //return Observable.of([]);
-//     }
+
+    getOwnedArchive(page:number,size:number) : Observable<NavigableArchive>{
+        return this.http.get<NavigableArchive>(this.archivesAddress+""+this.ownedArchiveParam+"&page="+page+"&size="+size).pipe(retry(3));
+    }
+
+    getPurchasedArchive(page:number,size:number) : Observable<NavigableArchive>{
+        return this.http.get<NavigableArchive>(this.archivesAddress+""+this.purchasedArchiveParam+"&page="+page+"&size="+size).pipe(retry(3));
+    }
 //     navigateNext(nav:NavigableArchive):Observable<NavigableArchive>{
 //         return this.webclient.get<NavigableArchive>(nav._links.next.href).pipe(retry(3));
 //     }
@@ -127,10 +133,10 @@
         
 //     }
 
-//     ngOnDestroy(): void {
-//         if(this.subscription1 !== null && this.subscription1 !== undefined)
-//             this.subscription1.unsubscribe();
-//         if(this.subscription2 !== null && this.subscription2 !== undefined)
-//             this.subscription2.unsubscribe();
-//     }
-// }
+    ngOnDestroy(): void {
+        if(this.subscription1)
+            this.subscription1.unsubscribe();
+        if(this.subscription2)
+            this.subscription2.unsubscribe();
+    }
+}

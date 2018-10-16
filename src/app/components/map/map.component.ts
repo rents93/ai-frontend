@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { tileLayer, latLng, circle, polygon, marker, icon, geoJSON, point, bounds, LeafletMouseEvent } from 'leaflet';
 import * as L from 'leaflet';
 import { DateTimeAdapter } from 'ng-pick-datetime';
-import { MapService } from '../../services/map.service';
+import { MapService } from '../../services/map/map.service';
 
 @Component({
   selector: 'app-map',

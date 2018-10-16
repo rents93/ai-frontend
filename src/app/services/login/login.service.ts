@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { map, retry } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 

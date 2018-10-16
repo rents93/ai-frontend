@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, AfterContentInit, AfterContentChecked, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { LoginService } from '../../services/login.service';
+import { LoginService } from '../../services/login/login.service';
 import { Router } from '@angular/router';
-import { JwtService } from '../../services/jwt.service';
+import { JwtService } from '../../services/jwt/jwt.service';
 
 @Component({
   selector: 'nav',
@@ -15,7 +15,6 @@ export class NavComponent implements OnInit {
 
   title: String = 'GeoposApp';
   user: String;
-  islogged: boolean;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -23,14 +22,19 @@ export class NavComponent implements OnInit {
     );
     
   constructor(private breakpointObserver: BreakpointObserver, private loginService: LoginService,
-     private router: Router, private jwtService: JwtService) {}
-  
+     private router: Router, private jwtService: JwtService) {
+    
+  }
+
+  ifLogged(){
+    return this.jwtService.ifLogged();
+  }
+
   ngOnInit() {
-    this.islogged = this.jwtService.ifLogged();
   }
 
   logout(){
     this.loginService.logout();
     this.router.navigate(['home']);
   }
-  }
+}

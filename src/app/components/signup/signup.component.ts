@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { SignupService } from '../../services/signup.service';
+import { SignupService } from '../../services/signup/signup.service';
 import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';

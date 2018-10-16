@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { tokenGetter } from '../app.module';
+import { tokenGetter } from '../../app.module';
 
 @Injectable({
     providedIn: 'root'
