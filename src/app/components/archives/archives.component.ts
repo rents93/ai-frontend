@@ -2,8 +2,8 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ArchiveService } from '../../services/archive/archive.service';
 //import { Subscription } from 'rxjs/Subscription';
-// import { Archive } from '../../models/archive';
-import { NavigableArchive } from '../../models/navigable-archive';
+ import { Archive } from '../../models/archive';
+import { NavigableArchive } from '../../models/navigablearchive';
 
 @Component({
   selector: 'app-archives',
@@ -12,31 +12,25 @@ import { NavigableArchive } from '../../models/navigable-archive';
 })
 export class ArchivesComponent implements OnInit {
 
-  ownedArchivesSub : Subscription;
-  purchasedArchivesSub : Subscription;
-//   deleteSub : Subscription;
-//   downloadSub : Subscription;
+  paginationSize : number = 10;
+  ownedArchivesSub : Subscription = this.archiveService.getOwnedArchives(0,this.paginationSize)
+  .subscribe( (archive) => {
+    this.ownedArchives = archive;
+  });
+  purchasedArchivesSub : Subscription = this.archiveService.getPurchasedArchives(0,this.paginationSize)
+  .subscribe( (archive) => {
+    this.purchasedArchives = archive;
+  });
+   deleteSub : Subscription;
+   downloadSub : Subscription;
   ownedArchives : NavigableArchive = new NavigableArchive([],null);
   purchasedArchives : NavigableArchive = new NavigableArchive([],null);
-  paginationSize : number;
-//   changeDetectorRefs :ChangeDetectorRef[] = [];
+  
+   changeDetectorRefs :ChangeDetectorRef[] = [];
   
   constructor(private archiveService: ArchiveService, private changeDetectorRef:ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.paginationSize = 10; 
-
-    this.ownedArchivesSub = this.archiveService.getOwnedArchive(0,this.paginationSize)
-      .subscribe( (archive) => {
-        this.ownedArchives = archive;
-      }
-    );
-
-    this.purchasedArchivesSub = this.archiveService.getPurchasedArchive(0,this.paginationSize)
-      .subscribe( (archive) => {
-        this.purchasedArchives = archive;
-      }
-    );
   }
 
   ngOnDestroy(): void {
@@ -48,8 +42,8 @@ export class ArchivesComponent implements OnInit {
     }
     // if(this.deleteSub !== null && this.deleteSub !== undefined)
     //   this.deleteSub.unsubscribe();
-    // if(this.downloadSub !== null && this.downloadSub !== undefined)
-    //   this.downloadSub.unsubscribe();
+     if(this.downloadSub !== null && this.downloadSub !== undefined)
+       this.downloadSub.unsubscribe();
   }
 
   getOwnedNext(){
@@ -86,150 +80,49 @@ export class ArchivesComponent implements OnInit {
 
   download(filename:string){
     this.archiveService.getArchive(filename);
-    /*this.downloadSub = this.archiveService.getArchive(filename)
-                      .subscribe(/(data : Response) =>{
-                        console.log(data);
-                        this.downloadFile(data);
-                      },
-                 (error) => {
-                   console.dir(error);
-                   alert("Error downloading the file");
-                 }
-                      );*/
+    // this.downloadSub = this.archiveService.getArchive(filename)
+    //                   .subscribe((data : Response) =>{
+    //                     //console.log(data);
+    //                     this.downloadFile(data);
+    //                   },
+    //              (error) => {
+    //                console.dir(error);
+    //                alert("Error downloading the file");
+    //              }
+    //                   );
   }
 
-//   downloadFile(data: Response){
-//     var blob = new Blob([data], { type: 'application/zip' });
-//     var url= window.URL.createObjectURL(blob);
-//     window.open(url);
-//   }
+  // downloadFile(data: Response){
+  //   var blob = new Blob(data, { type: 'application/zip' });
+  //   var url= window.URL.createObjectURL(blob);
+  //   window.open(url);
+  // }
 
-//   remove(filename:string){
-//     if(confirm("Are you sure to remove archive: " + filename +" ?")) {
-//     //console.log('removing ' + filename);
-//     let removedElement : Archive;
-//     //rimozione preventiva dell'elemento dalla lista
-//     for(let i = 0; i < this.ownArchives.archives.length; i++){
-//       let archiveFilename : String = this.ownArchives.archives[i].filename;
-//       if(archiveFilename.localeCompare(filename) == 0){
-//         removedElement = this.ownArchives.archives[i];
-//         this.ownArchives.archives.splice(i, 1);
-//         break;
-//       }
-//     }
-//     this.deleteSub = this.archiveService.deleteArchive(filename)
-//                         .subscribe( (data) => {
-//                           this.ownArchiveSub = this.archiveService.getSelfArchives(0,this.paginationSize)
-//                               .subscribe( (navarchive) => {
-//                                                 //console.dir(navarchive);
-//                                                 this.ownArchives=navarchive;
-//                                                 this.changeDetectorRef.detectChanges();
-//                               } );
-//                         },
-//                        (error) => {
-//                          //se ho avuto errore riaggiungo l'elemento nella lista
-//                          this.ownArchives.archives.push(removedElement);
-//                          alert("Server error. Unable to delete " + filename)
-//                        })
+  remove(filename:string){
+    let removedElement : Archive;
+    //rimozione preventiva dell'elemento dalla lista
+    for(let i = 0; i < this.ownedArchives.archives.length; i++){
+      let archiveFilename : String = this.ownedArchives.archives[i].filename;
+      if(archiveFilename.localeCompare(filename) == 0){
+        removedElement = this.ownedArchives.archives[i];
+        this.ownedArchives.archives.splice(i, 1);
+        break;
+      }
+    }
+    this.deleteSub = this.archiveService.deleteArchive(filename)
+                        .subscribe( (data) => {
+                          this.ownedArchivesSub = this.archiveService.getOwnedArchives(0,this.paginationSize)
+                              .subscribe( (navarchive) => {
+                                                //console.dir(navarchive);
+                                                this.ownedArchives=navarchive;
+                                                this.changeDetectorRef.detectChanges();
+                              } );
+                        },
+                       (error) => {
+                         //se ho avuto errore riaggiungo l'elemento nella lista
+                         this.ownedArchives.archives.push(removedElement);
+                         alert("Server error. Unable to delete " + filename)
+                       })
 
-//   }
-// }
-
-
-
-//   downloadSelected(){
-  
-//     let elements =  document.getElementsByClassName("mycheck");
-//     let filenames = new Array<string>();
-
-//     for(let i=0; i< elements.length; i++) {
-//       let htmlElement = <HTMLInputElement> elements[i];
-//       if(htmlElement.checked){
-//         filenames.push(htmlElement.value);
-//       }
-//     }
-//     if(filenames.length >0){
-//       this.archiveService.getArchives(filenames);
-//     }
-//     else{
-//       alert("No archive selected!");
-//     }
-
-//   }
-
-//   removeSelected(){
-//     let elements =  document.getElementsByClassName("mycheck");
-//     let filenames : string[] = [];
-
-//     for(let i=0; i< elements.length; i++) {
-//       let htmlElement = <HTMLInputElement> elements[i];
-//       if(htmlElement.checked){
-//         filenames.push(htmlElement.value);
-//       }
-//     }
-
-//     if(filenames.length>0){
-//     if(confirm("Are you sure to remove all selected archives?")) {
-   
-//       let removedElements : Archive[] = [];
-//       //rimozione preventiva dell'elemento dalla lista
-//       for(let j = 0; j < filenames.length; j++){
-//         for(let i = 0; i < this.ownArchives.archives.length; i++){
-//           if(this.ownArchives.archives[i].filename.localeCompare(filenames[j]) == 0){
-//             removedElements.push(this.ownArchives.archives[i]);
-//             this.ownArchives.archives.splice(i, 1);
-//             break;
-//           }
-//         }
-//       }
-//       //let _self = this;
-//       if(filenames.length > 0){
-//         this.deleteSub = this.archiveService.deleteArchives(filenames)
-//                             .subscribe( (data) => {
-//                                 alert("Delete successful");
-//                                 this.ownArchiveSub = this.archiveService.getSelfArchives(0,this.paginationSize)
-//                                                   .subscribe( (navarchive) => {
-//                                                           //console.dir(navarchive);
-//                                                           this.ownArchives=navarchive;
-//                                                           this.changeDetectorRef.detectChanges();
-//                                                   } );
-//                             },
-//                           (error) => {
-//                             //se ho avuto errore riaggiungo gli elementi nella lista
-//                             for(let i = 0; i < removedElements.length; i++){
-//                               let removedElement : Archive = removedElements[i];
-//                               this.ownArchives.archives.push(removedElement);
-//                               alert("Server error. Unable to delete " + removedElement.getFilename());
-//                             }
-//                           });
-//         }
-//       }
-//     }
-//     else{
-//       alert("No archive selected!");
-//     }
-
-   
-//   }
-
-//   cancelSelected(){
-//     let elements =  document.getElementsByClassName("mycheck");
-
-//     for(let i=0; i< elements.length; i++) {
-//       let htmlElement = <HTMLInputElement> elements[i];
-//       if(htmlElement.checked){
-//         htmlElement.checked = false;
-//       }
-//     }
-//   }
-
-//   selectAll(){
-//     let elements =  document.getElementsByClassName("mycheck");
-
-//     for(let i=0; i< elements.length; i++) {
-//       let htmlElement = <HTMLInputElement> elements[i];
-//       htmlElement.checked = true;
-//     }
-//   }
-
+  }
 }

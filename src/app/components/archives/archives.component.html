@@ -44,14 +44,14 @@
                 <table>
                     <tr>
                         <td>
-                            <button id="element1" [disabled]="!(ownedArchives._links?.previous)"
+                            <button id="element1" [disabled]="ownedArchives._links===null||ownedArchives._links.previous===null||ownedArchives._links.previous===undefined"
                                 type="button" class="btn btn-primary btn-s minbutton" (click)="getOwnedPrevious()">
                                 <span class="glyphicon glyphicon-backward"></span> Previous
                             </button>
                         </td>
                         <br>
                         <td>
-                            <button id="element2" [disabled]="!(ownArchives._links?.next)"
+                            <button id="element2" [disabled]="ownedArchives._links===null||ownedArchives._links.next===null||ownedArchives._links.next===undefined"
                                 type="button" class="btn btn-primary btn-s minbutton" (click)="getOwnedNext()">
                                 <span class="glyphicon glyphicon-forward"></span> Next
                             </button>
@@ -98,17 +98,6 @@
           <mat-card-title>
             <table>
                 <tr>
-                    <!-- <td>
-                        <span matTooltip="Number of Items per Page">
-                            <select class="select" name="slct" id="slct" #pages (change)="changePageSize(pages.value)">
-                                <option value="5">5 Archives</option>
-                                <option value="10">10 Archives</option>
-                                <option value="50">50 Archives</option>
-                                <option value="100">100 Archives</option>
-                            </select>
-                        </span>
-                    </td>
-                    <br> -->
                     <td>
                         <button id="element1" [disabled]="!(purchasedArchives._links?.previous)"
                             type="button" class="btn btn-primary btn-s minbutton" (click)="getPurPrevious()">
