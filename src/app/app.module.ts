@@ -28,6 +28,7 @@ import { MapService } from './services/map/map.service';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { JwtModule } from '@auth0/angular-jwt';
 import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
+import { FileUploadModule } from "ng2-file-upload";
 
 
 // config JwtHelper
@@ -47,6 +48,7 @@ export function tokenGetter(){
     HomeComponent,
     SignupComponent,
     UploadComponent
+
   ],
   imports: [
     BrowserModule,
@@ -70,7 +72,8 @@ export function tokenGetter(){
       config: {
         tokenGetter: tokenGetter
       }
-    })    
+    }),
+    FileUploadModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
