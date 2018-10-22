@@ -32,21 +32,28 @@ export class SignupService {
 
     register(user:User){
         let targetUrl = this.basicUrl + "/guest/register";
-        //console.log(targetUrl);
+        console.log(targetUrl);
+        console.log(user);
         let res : Observable<any> = this.http.post(
             targetUrl,
-            user,
-        ).pipe(retry(3));
+            user            
+        );//.pipe(retry(3));
         console.log(res);
         let obs : Observable<any> = res.pipe(
             map(
                 resp => {
                     if(resp.status===201){
                         return true;
-                        }
-                    return false;
+                    }
+                    else{
+                        return false;
+                    }
                 }
-        ), catchError((e)=>{return of(false)}));
+        ), catchError(
+            (e)=>{
+                return of(false);
+            }
+        ));
         return obs;
       }
       

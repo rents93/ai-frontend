@@ -4,10 +4,7 @@
   <mat-form-field matTooltip="No special characters are allowed">
     <input type="text" matInput placeholder="Username" formControlName="username" required pattern="^[a-zA-Z0-9_.-]*$">
   </mat-form-field>
-  <br> 
-  <div *ngIf="signupForm.controls.username.status === 'PENDING'">
-    Checking...
-  </div>
+  <br>
   <div class="ok" *ngIf="signupForm.controls.username.status === 'INVALID' && signupForm.controls.username.value != ''">
     caratteri Username invalidi
   </div>
