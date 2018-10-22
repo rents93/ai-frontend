@@ -100,6 +100,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
     if (this.signupForm.valid) {
       this.subscription = this.signupService.register(this.user).subscribe((data) => {
+        console.log(data);
         if (!data) {
           this.errorMessage = "Errore nella registrazione, riprova";
           this.changeDetectorRef.detectChanges();
