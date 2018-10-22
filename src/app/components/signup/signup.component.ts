@@ -27,7 +27,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   changeDetectorRefs :ChangeDetectorRef[] = [];
   public user: User;
   private subscription: Subscription;
-
+  private errorMessage: string | null;
 
   constructor(private signupService: SignupService, private changeDetectorRef:ChangeDetectorRef, private router : Router) {
   }
@@ -90,8 +90,6 @@ export class SignupComponent implements OnInit, OnDestroy {
      }
   }
 
-  @Input() errorMessage: string | null;
-
   signupFormSubmit(): void{
     this.user =
       new User(
@@ -107,8 +105,6 @@ export class SignupComponent implements OnInit, OnDestroy {
           this.changeDetectorRef.detectChanges();
         }
         else{
-          this.errorMessage = null;
-          window.localStorage.setItem('ai-registration', 'pending');
           this.router.navigateByUrl('login');
         }
       });
