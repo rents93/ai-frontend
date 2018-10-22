@@ -26,15 +26,16 @@ export class NavComponent implements OnInit {
      private router: Router, private jwtService: JwtService) {
   }
 
-  ngOnInit() {
-    const helper = new JwtHelperService();
-    let token = helper.decodeToken(window.localStorage.getItem('ai-token'));
-    console.log(token);
-    this.nome_utente = token.user_name;
-  }
+  ngOnInit() {}
 
   logged(): boolean{
-    return this.jwtService.ifLogged();
+    let ret = this.jwtService.ifLogged();
+    if (ret == true){
+      const helper = new JwtHelperService();
+      let token = helper.decodeToken(window.localStorage.getItem('ai-token'));
+      this.nome_utente = token.user_name;
+    }
+    return ret;
   }
 
   logout(){
