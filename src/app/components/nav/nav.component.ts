@@ -23,23 +23,12 @@ export class NavComponent implements OnInit {
     
   constructor(private breakpointObserver: BreakpointObserver, private loginService: LoginService,
      private router: Router, private jwtService: JwtService) {
-<<<<<<< HEAD
   }
 
   ngOnInit(): void {}
 
   logged(): boolean{
     return this.jwtService.ifLogged();
-=======
-    
-  }
-
-  ifLogged(){
-    return this.jwtService.ifLogged();
-  }
-
-  ngOnInit() {
->>>>>>> 9be9327b982de36ced2a3aa15bab6cef67c21f3b
   }
 
   logout(){

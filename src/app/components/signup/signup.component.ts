@@ -1,11 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-<<<<<<< HEAD
-import { SignupService } from '../../services/signup.service';
-import { map } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
-// import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
-=======
 import { SignupService } from '../../services/signup/signup.service';
 import { map, delay } from 'rxjs/operators';
 import { Subscription, observable } from 'rxjs';
@@ -13,7 +7,6 @@ import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
 //import { UserValidator } from '../../validators/user.validator';
 import { User } from '../../models/user';
 import { Router } from '@angular/router';
->>>>>>> 9be9327b982de36ced2a3aa15bab6cef67c21f3b
 
 import { environment } from '../../../environments/environment';
 import { retry, mapTo } from 'rxjs/operators';
@@ -35,11 +28,6 @@ export class SignupComponent implements OnInit, OnDestroy {
   public user: User;
   private subscription: Subscription;
 
-<<<<<<< HEAD
-  constructor(private signupService: SignupService) {}
-
-  ngOnInit() {}
-=======
 
   constructor(private signupService: SignupService, private changeDetectorRef:ChangeDetectorRef, private router : Router) {
   }
@@ -51,7 +39,6 @@ export class SignupComponent implements OnInit, OnDestroy {
       passwordConfirm: new FormControl('', Validators.required)
     },  [this.checkPasswordMatch/*,this.checkUsernameNotTaken.bind(this) */]);
   }
->>>>>>> 9be9327b982de36ced2a3aa15bab6cef67c21f3b
 
 
   checkUsernameNotTaken(fc: FormControl): Subscription {
