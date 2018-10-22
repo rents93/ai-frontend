@@ -15,7 +15,6 @@ export class NavComponent implements OnInit {
 
   title: String = 'GeoposApp';
   user: String;
-  islogged: boolean;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -23,10 +22,13 @@ export class NavComponent implements OnInit {
     );
     
   constructor(private breakpointObserver: BreakpointObserver, private loginService: LoginService,
-     private router: Router, private jwtService: JwtService) {}
-  
-  ngOnInit() {
-    this.islogged = this.jwtService.ifLogged();
+     private router: Router, private jwtService: JwtService) {
+  }
+
+  ngOnInit(): void {}
+
+  logged(): boolean{
+    return this.jwtService.ifLogged();
   }
 
   logout(){

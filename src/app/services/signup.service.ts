@@ -9,7 +9,7 @@ export class SignupService {
     basicUrl: String;
 
     constructor(private http: HttpClient) {
-        this.basicUrl = environment.API_URL;
+        this.basicUrl = environment.API_URL;    
     }
 
     ifDuplicateUsername(username: string){

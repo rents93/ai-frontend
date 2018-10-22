@@ -12,7 +12,8 @@ import {
     MatListModule, 
     MatDatepickerModule, 
     MatCardModule,
-    MatCheckboxModule, } from '@angular/material';
+    MatCheckboxModule,
+     } from '@angular/material';
 
 @NgModule({
 imports: [

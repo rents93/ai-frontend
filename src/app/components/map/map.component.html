@@ -1,92 +1,107 @@
-<h3>Mappa Posizioni</h3>
-<div id="mapid" (leafletMapReady)="onMapReady($event)" style="height: 400px; width: 75%;"></div>
- <!-- <mat-card-content>
-  Map
-  <div id="chartContainer" style="height: 70px; width: 100%;"></div>
-  <div class="map" leaflet style="height: 45vh;" (leafletMapReady)="onMapReady($event)" [leafletOptions]="options" [leafletLayers]="layers">
-  </div>
-
-</mat-card-content> -->
-<!-- <app-datepicker (startDate)="storeSD($event)" (endDate)="storeED($event)"></app-datepicker> -->
-<div style="width:80%; margin:auto">
-    <label>Seleziona periodo:</label>
+<div class="outer">
+    Seleziona periodo:
     <mat-form-field>
         <input matInput [max]="endDate" [(ngModel)]="startDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="StartDate">
         <owl-date-time #dt1 [firstDayOfWeek]="1"></owl-date-time>
-      </mat-form-field>
-      <mat-form-field>
+    </mat-form-field>
+    <mat-form-field>
         <input matInput [min]="startDate" [(ngModel)]="endDate" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" placeholder="EndDate">
         <owl-date-time #dt2 [firstDayOfWeek]="1"></owl-date-time>
-      </mat-form-field>
-      <button mat-button [matMenuTriggerFor]="menu">Seleziona utenti</button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item>
-            <mat-checkbox>Tutti</mat-checkbox>
-        </button>
-        <button mat-menu-item>
-            <mat-checkbox>Nessuno</mat-checkbox>
-        </button>
-        <button mat-menu-item *ngFor="let user of Users">
-          <mat-checkbox>{{user}}</mat-checkbox>
-        </button>
-      </mat-menu>     
+    </mat-form-field>
+
+    <button mat-button [matMenuTriggerFor]="menu">Seleziona utenti</button>
+    <mat-menu overlapTrigger="false" #menu="matMenu" (closed)="closingUsersMenu()">
+    <button (click)="$event.stopPropagation();selectAll()" mat-menu-item>
+        Tutti
+    </button> 
+    <button (click)="$event.stopPropagation();unselectAll();" mat-menu-item>
+        Nessuno
+    </button>
+    <button (click)="$event.stopPropagation()" mat-menu-item *ngFor="let user of users">
+        <input type="checkbox" checked="true" value="{{user}}" class="checkBoxUsers">{{user}}
+        <!-- <mat-checkbox checked="true" class="checkBoxUsers">{{user}}</mat-checkbox> -->
+        <!-- <div *ngFor="let item of toDos;let index = index;trackBy:trackByIndex;">
+            <input [(ngModel)]="toDos[index]" placeholder="item">
+        </div> -->
+    </button>
+    </mat-menu>
+    <button style="margin: auto" mat-button (click)="getPositions()">Visualizza posizioni</button>
+    <div id="mapid" (leafletMapReady)="onMapReady($event)" style="height: 40vh;"></div>
+    <mat-card>
+        <mat-card-content id="poly_div" style="display: none">
+                <button mat-button (click)="resetPolygon()">Resetta poligono</button>
+                <button mat-button (click)="getPositions()">Applica poligono</button>
+        </mat-card-content>      
+    <mat-card-content>#Posizioni selezionate: {{n_positions}}</mat-card-content>
+    <button mat-button (click)="selectArchives()">Mostra archivi</button>
+    <button mat-button (click)="buyArchives()">Acquista archivi</button>
+    </mat-card>
+    <div style="position: relative; height: 15vh">  
+    <canvas id="myChart"></canvas>
+    </div>
+    <mat-card>
+        <mat-card-title>Archivi</mat-card-title>
+        <br>
+        <mat-card-content class="center-card">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="70%">Archivio</th>
+                        <th width="30%">Acquistato</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let archive of selectedArchives">
+                        <td>
+                            <strong>{{archive.filename}}</strong>
+    
+                        </td>
+                        <td class="text-center">
+                            {{archive.purchased}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </mat-card-content>
+    </mat-card>
 </div>
 
+<!-- <div id="mapid" (leafletMapReady)="onMapReady($event)" style="height: 40vh; width: 75%;"></div>
 
-<!-- ci sta fare la richiesta al server solo quando si espandono i campi, non ad ogni modifica -->
+<div id="poly_div" class="outer" style="display: none">
+  <button class="inner" mat-button (click)="resetPolygon()" style="display:inline-block">Resetta poligono</button>
+  <button class="inner" mat-button (click)="getPositions()" style="display:inline-block">Applica poligono</button>
+</div>
 
-<!-- <button mat-button [matMenuTriggerFor]="menu">Menu</button>
-<mat-menu #menu="matMenu">
-  <button mat-menu-item>Item 1</button>
-  <button mat-menu-item>Item 2</button>
-</mat-menu> -->
-<!-- <mat-card-content>
-  Stard Date:
-  <input [max]="endDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Date Time">
-  <owl-date-time #dt1 [firstDayOfWeek]="1"></owl-date-time>
+<mat-card style="width: 75%">
+  <mat-card-content>#Posizioni selezionate: {{n_positions}}</mat-card-content>
+  <button mat-button (click)="selectArchives()">Mostra archivi</button>
+  <button mat-button (click)="buyArchives()">Acquista archivi</button>
+</mat-card>
+<div style="position: relative; height: 15vh; width: 75%;">  
+  <canvas id="myChart"></canvas>
+</div>
 
-  End Date:
-  <input [min]="startDate" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" placeholder="Date Time">
-  <owl-date-time #dt2 [firstDayOfWeek]="1"></owl-date-time>
+<mat-card-title>Archivi</mat-card-title>
+<br>
+<mat-card-content class="center-card">
+    <table class="table">
+        <thead>
+            <tr>
+                <th width="70%">Archive</th>
+                <th width="30%">Owned</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let archive of selectedArchives">
+                <td>
+                    <strong>{{archive.filename}}</strong>
+
+                </td>
+                <td class="text-center">
+                    {{archive.purchased}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </mat-card-content> -->
-  
-<!-- 
-  <input class="center" 
-    [max]="endDate"
-    [owlDateTimeTrigger]="dt1" 
-    [owlDateTime]="dt1">
-  <owl-date-time #dt1></owl-date-time>
-
-  End Date:
-
-  <input class="center" 
-    [min]="startDate"
-    [owlDateTimeTrigger]="dt2" 
-    [owlDateTime]="dt2">
-  <owl-date-time #dt2></owl-date-time> -->
-
-
-<!-- <div>
-  <mat-list>
-    <mat-list-item>
-      Vertice 1
-      <mat-form-field>
-        <input matInput #v1lat type="number" placeholder="lat" step="0.000001" min="-90.000000" max="90.000000">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput #v1long type="number" placeholder="long" step="0.000001" min="-180.000000" max="180.000000">
-      </mat-form-field>
-    </mat-list-item>
-    <mat-list-item>
-      Vertice 2
-      <mat-form-field>
-        <input matInput #v2lat type="number" placeholder="lat" step="0.000001" min="-90.000000" max="90.000000">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput #v2long type="number" placeholder="long" step="0.000001" min="-180.000000" max="180.000000">
-      </mat-form-field>
-    </mat-list-item>
-  </mat-list>
-  <button (click)="onSelect(v1lat.value, v1long.value, v2lat.value, v2long.value)" mat-button>Visualizza posizioni!</button>
-</div> -->
-

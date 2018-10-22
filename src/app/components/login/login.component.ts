@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
           (response) => {
             window.localStorage.setItem('ai-token', response.access_token);
-            this.router.navigate(['/home']);
+            this.router.navigate(['home']);
           },
           error => {    
             if(error.status == 400){

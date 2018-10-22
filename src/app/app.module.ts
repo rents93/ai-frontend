@@ -25,7 +25,7 @@ import { JwtService } from './services/jwt.service';
 import { SignupService } from './services/signup.service';
 import { MapService } from './services/map.service';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
-import { JwtModule } from '@auth0/angular-jwt';
+import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
 import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
 
 
@@ -74,12 +74,13 @@ export function tokenGetter(){
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     LoginService,
     JwtService,
+    JwtHelperService,
     MapService,
     ErrorInterceptor,
     JwtInterceptor,
     AuthGuard,
     NoAuthGuard,
-    SignupService
+    SignupService,
   ],
   bootstrap: [AppComponent]
 })
