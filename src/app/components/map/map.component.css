@@ -1,0 +1,32 @@
+.inner {
+    display: inline-block;
+}
+
+.outer {
+    width: 80%;
+    text-align: center;
+}
+
+mat-card-title,
+  .center-card{
+    display: flex;
+    justify-content: center;
+  }
+
+  .link-btn:hover /deep/ .mat-button-focus-overlay {
+    background-color: transparent;
+    
+}
+
+table th {
+    text-align: center;
+    width: 100%;
+  }
+  
+  table tr {
+    text-align: center;
+  }
+
+  .bold{
+    font-weight: bold;
+  }

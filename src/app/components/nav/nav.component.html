@@ -1,36 +1,35 @@
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav
-      #drawer
-      class="sidenav"
-      fixedInViewport="true"
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="!(isHandset$ | async)">
-      <mat-toolbar color="primary">Menu</mat-toolbar>
-      <mat-nav-list>
-        <a *ngIf="ifLogged()" mat-list-item routerLink="/home">Home</a>
-        <a *ngIf="ifLogged()" mat-list-item routerLink="/map">Map</a>
-        <a *ngIf="ifLogged()" mat-list-item routerLink="/archives">Archives management</a>
-        <a *ngIf="ifLogged()" mat-list-item routerLink="/upload">Upload</a>
-        <a *ngIf="!ifLogged()" mat-list-item routerLink="/login">Login</a>
-        <a *ngIf="!ifLogged()" mat-list-item routerLink="/signup">Sign up</a>
-        <a *ngIf="ifLogged()" style="position:absolute; bottom: 0; width: 100%" mat-list-item (click)="logout()">Logout</a>
-      </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <mat-toolbar color="primary">
-        <button type="button"
-                aria-label="Toggle sidenav"
-                mat-icon-button
-                (click)="drawer.toggle()"
-                *ngIf="isHandset$ | async">
-          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-        </button>
-        <span>{{title}}</span>
-      </mat-toolbar>
-  
-      <router-outlet></router-outlet>
-  
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-  
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport="true"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)">
+    <mat-toolbar color="primary">Menu</mat-toolbar>
+    <mat-nav-list>
+      <a *ngIf="logged()" mat-list-item routerLink="/map">Mappa</a>
+      <a *ngIf="logged()" mat-list-item routerLink="/archives">Gestione Archivi</a>
+      <a *ngIf="logged()" mat-list-item routerLink="/upload">Caricamento Archivi</a>
+      <a *ngIf="!logged()" mat-list-item routerLink="/login">Login</a>
+      <a *ngIf="!logged()" mat-list-item routerLink="/signup">Registrati</a>
+      <a *ngIf="logged()" style="position:absolute; bottom: 0; width: 100%" mat-list-item (click)="logout()">Logout</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button type="button"
+              aria-label="Toggle sidenav"
+              mat-icon-button
+              (click)="drawer.toggle()"
+              *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>{{title}}</span>
+      <span *ngIf="logged()" style="position:absolute; right:1vw;">Benvenuto {{nome_utente}}</span>
+    </mat-toolbar>
+
+    <router-outlet></router-outlet>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

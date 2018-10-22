@@ -11,12 +11,10 @@ export class JwtService {
 
     ifLogged(){
         let token = tokenGetter();
-        if(token && !this.ifTokenExpired(token)){
+        if(token && !this.ifTokenExpired(token))
             return true;
-        }
-        else{
-            return false;
-        }
+        else
+            return false;    
     }
     
     ifTokenExpired(token: string): boolean{

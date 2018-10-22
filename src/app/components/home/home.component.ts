@@ -10,15 +10,13 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class HomeComponent implements OnInit {
 
   nome_utente: String = "generic_user";
-  token;
 
   constructor() { }
 
   ngOnInit() {
     const helper = new JwtHelperService();
-    this.token = helper.decodeToken(window.localStorage.getItem('ai-token'));
-    console.log(this.token);
-    this.nome_utente = this.token.user_name;
+    let token = helper.decodeToken(window.localStorage.getItem('ai-token'));
+    console.log(token);
+    this.nome_utente = token.user_name;
   }
-
 }
