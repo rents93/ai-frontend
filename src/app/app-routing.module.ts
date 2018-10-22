@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AuthGuard } from './guards/auth.guard';
 import { ArchivesComponent } from './components/archives/archives.component';
+import { UploadComponent } from './components/upload/upload.component';
 import { HomeComponent } from './components/home/home.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { NoAuthGuard } from './guards/no-auth.guard';
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent, canActivate: [NoAuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
   { path: 'archives', component: ArchivesComponent, canActivate: [AuthGuard]  },
+  { path: 'upload', component: UploadComponent, canActivate: [AuthGuard]  },
   { path: 'home', component: HomeComponent, canActivate:[AuthGuard] },
   { path: '**', component: PageNotFoundComponent }
 ]

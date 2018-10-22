@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { JwtService } from '../services/jwt.service';
+import { JwtService } from '../services/jwt/jwt.service';
 
 @Injectable()
 export class NoAuthGuard implements CanActivate {    // path without guards
