@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { LoginService } from '../../services/login/login.service';
 import { Router } from '@angular/router';
 import { JwtService } from '../../services/jwt/jwt.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'nav',
@@ -14,7 +15,7 @@ import { JwtService } from '../../services/jwt/jwt.service';
 export class NavComponent implements OnInit {
 
   title: String = 'GeoposApp';
-  user: String;
+  nome_utente: String = "";
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -25,7 +26,12 @@ export class NavComponent implements OnInit {
      private router: Router, private jwtService: JwtService) {
   }
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    const helper = new JwtHelperService();
+    let token = helper.decodeToken(window.localStorage.getItem('ai-token'));
+    console.log(token);
+    this.nome_utente = token.user_name;
+  }
 
   logged(): boolean{
     return this.jwtService.ifLogged();
@@ -33,6 +39,6 @@ export class NavComponent implements OnInit {
 
   logout(){
     this.loginService.logout();
-    this.router.navigate(['home']);
+    this.router.navigate(['login']);
   }
 }

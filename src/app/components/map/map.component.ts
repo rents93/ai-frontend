@@ -3,7 +3,7 @@ import { tileLayer, latLng, circle, polygon, marker, icon, geoJSON, point, bound
 import * as L from 'leaflet';
 import { Subscription, Subject } from 'rxjs';
 import { DateTimeAdapter } from 'ng-pick-datetime';
-import { MapService } from '../../services/map.service';
+import { MapService } from '../../services/map/map.service';
 import { forEach } from '@angular/router/src/utils/collection';
 import { MatCheckbox, MatInput, MAT_DIALOG_SCROLL_STRATEGY_PROVIDER_FACTORY } from '@angular/material';
 import { CheckboxControlValueAccessor } from '@angular/forms';
@@ -239,7 +239,7 @@ export class MapComponent implements OnInit, OnDestroy {
       let lng = positionData[i].point.coordinates[0];
       // add each marker as a layer
       let c : string = this.userColorMap.get(user);
-      this.markerLayers[i] = L.circle([lat, lng], {radius: 200, color: c});
+      this.markerLayers[i] = L.circle([lat, lng], {radius: 1000, color: c});
       // console.log(this.markerLayers[i]);
     }
     // add all layers as a single array to layer

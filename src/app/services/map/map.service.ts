@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, retry } from 'rxjs/operators';
-import { QueryObj } from '../models/queryObj';
-import { QueryResult } from '../models/QueryResult/queryResult';
+import { QueryObj } from '../../models/queryObj';
+import { QueryResult } from '../../models/QueryResult/queryResult';
 import { ArchiveTransaction } from 'src/app/models/QueryResult/archiveTransaction';
 
 @Injectable({
