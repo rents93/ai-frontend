@@ -1,19 +1,17 @@
 <mat-card>
   <form [formGroup]="loginForm" (ngSubmit)="loginFormSubmit()">
-  <mat-form-field>
-    <input type="text" (focus)="clearErrMess()" matInput placeholder="Username" formControlName="username" pattern="^[a-zA-Z0-9_.-]*$" required>
-  </mat-form-field>  
-  
-  <mat-form-field>
-    <input type="password" (focus)="clearErrMess()" matInput placeholder="Password" formControlName="password" required>
-  </mat-form-field> 
+    <mat-form-field>
+      <input type="text" (focus)="clearErrMess()" matInput placeholder="Username" formControlName="username" pattern="^[a-zA-Z0-9_.-]*$" required>
+    </mat-form-field>  
+    
+    <mat-form-field>
+      <input type="password" (focus)="clearErrMess()" matInput placeholder="Password" formControlName="password" required>
+    </mat-form-field> 
 
-  <div class="button-row">
-    <button type="submit" mat-raised-button color="primary" [disabled]='loginForm.invalid || loading'>Login</button>
-  </div>
+    <button mat-raised-button  type="submit" color="primary" [disabled]='loginForm.invalid || loading'>Login</button>
   </form>
-
-  <mat-card-content *ngIf="errorMessage" class="error">
+  <br>
+  <mat-card-content *ngIf="errorMessage">
     {{errorMessage}}
   </mat-card-content>
 </mat-card>

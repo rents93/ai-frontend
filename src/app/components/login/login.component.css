@@ -1,28 +1,24 @@
 :host {
     display: flex;
     justify-content: center;
-    margin: 72px 0;
+    margin: 20vh 0;
 }
 
 .mat-form-field {
     width: 100%;
-    min-width: 300px;
+    color: green;
 }
 
-mat-card-title, mat-card-content {
-    display: flex;
+/* .inner {
+    display: inline-block;
+} */
+
+.mat-card {
+    text-align: center;
+}
+
+.mat-card-content {
+    /* display: flex; */
     justify-content: center;
-}
-
-.loginError {
-    padding: 16px;
-    width: 300px;
-    color: white;
-    background-color: red;
-}
-
-.loginButtons {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
+    color: red;
 }
