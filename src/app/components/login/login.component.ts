@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from '../../services/login/login.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -10,9 +12,12 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loading = false;
-  errorMessage: string = '';
+  errorMessage: any = '';
   loginForm: FormGroup;
   disableButton = false;
+  sub: Subscription;
+
+  @ViewChild("user") userField: ElementRef;
 
   constructor(private loginService : LoginService, private router : Router, private formBuilder: FormBuilder) { }
 
@@ -28,21 +33,32 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.loginService.login(this.loginForm.controls.username.value , this.loginForm.controls.password.value)
-      .subscribe(
-          (response) => {
+    this.sub = this.loginService.login(this.loginForm.controls.username.value , 
+                                        this.loginForm.controls.password.value)
+      .subscribe( 
+          response => {
             window.localStorage.setItem('ai-token', response.access_token);
             this.router.navigate(['map']);
           },
-          error => {    
-            if(error.status == 400){
-              // 400 bad request
-              this.errorMessage = JSON.parse(error._body).error_description;
+          (respErr: HttpErrorResponse) => {
+            // console.log(respErr.error.error_description);
+            if(respErr.status == 400){
+              this.loading = false;
+              this.loginForm.reset();
+              this.errorMessage = "Credenziali errate";
             }
-            else{
+            else
               this.errorMessage = "Error, please try later."
-            }
           } 
       );
+  }
+  
+  clearErrMess() {
+    this.errorMessage = '';
+  }
+
+  ngOnDestroy(): void {
+    if(this.sub !== null && this.sub !== undefined)
+      this.sub.unsubscribe();
   }
 }
