@@ -1,41 +1,44 @@
-<form [formGroup]="signupForm" (ngSubmit)="signupFormSubmit()">
+<mat-card>
+  <mat-card-title>Registrazione</mat-card-title>
 
-  
-  <mat-form-field matTooltip="No special characters are allowed">
-    <input type="text" matInput placeholder="Username" formControlName="username" required pattern="^[a-zA-Z0-9_.-]*$">
-  </mat-form-field>
-  <br>
-  <div class="ok" *ngIf="signupForm.controls.username.status === 'INVALID' && signupForm.controls.username.value != ''">
-    caratteri Username invalidi
-  </div>
+  <form [formGroup]="signupForm" (ngSubmit)="signupFormSubmit()">
+    
+    <mat-form-field matTooltip="No special characters are allowed">
+      <input type="text" matInput placeholder="Username" formControlName="username" required pattern="^[a-zA-Z0-9_.-]*$">
+    </mat-form-field>
+    <br>
+    <div class="ok" *ngIf="signupForm.controls.username.status === 'INVALID' && signupForm.controls.username.value != ''">
+      caratteri Username invalidi
+    </div>
 
-  <div class="error" *ngIf="signupForm.controls.username.errors && signupForm.controls.username.errors.usernameTaken">
-    Username already taken
-  </div>
-  <br>
+    <div class="error" *ngIf="signupForm.controls.username.errors && signupForm.controls.username.errors.usernameTaken">
+      Username already taken
+    </div>
+    <br>
 
-  <mat-form-field matTooltip="Password length from  8 to 16">
-    <input type="password" matInput placeholder="Password" formControlName="password"  required minlength="8" maxlength="16">
-  </mat-form-field>
+    <mat-form-field matTooltip="Password length from  8 to 16">
+      <input type="password" matInput placeholder="Password" formControlName="password"  required minlength="8" maxlength="16">
+    </mat-form-field>
 
-  <ng2-password-strength-bar 
-            [passwordToCheck]="signupForm.controls.password.value"
-            [barLabel]="startBarLabel"
-            [barColors]="strengthBarColors"
-            [strengthLabels]="strengthBarLabels">
-  </ng2-password-strength-bar>
-  <br>
-  
-  <mat-form-field matTooltip="Confirm password must be equal to Password">
-    <input type="password" matInput placeholder="Confirm Password" formControlName="passwordConfirm" required validateEqual="password">
-  </mat-form-field>
+    <ng2-password-strength-bar 
+              [passwordToCheck]="signupForm.controls.password.value"
+              [barLabel]="startBarLabel"
+              [barColors]="strengthBarColors"
+              [strengthLabels]="strengthBarLabels">
+    </ng2-password-strength-bar>
+    <br>
+    
+    <mat-form-field matTooltip="Confirm password must be equal to Password">
+      <input type="password" matInput placeholder="Confirm Password" formControlName="passwordConfirm" required validateEqual="password">
+    </mat-form-field>
 
-  <div class="button-row">
-    <button type="submit" mat-raised-button color="primary" [disabled]='signupForm.invalid'>Sign up</button>
-  </div>
+    <div class="button-row">
+      <button type="submit" mat-raised-button color="primary" [disabled]='signupForm.invalid'>Sign up</button>
+    </div>
 
-  <p *ngIf="errorMessage" class="error">
-    {{ errorMessage }}
-  </p>
+    <p *ngIf="errorMessage" class="error">
+      {{ errorMessage }}
+    </p>
 
-</form>
+  </form>
+</mat-card>
