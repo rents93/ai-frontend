@@ -7,6 +7,8 @@ import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
 //import { UserValidator } from '../../validators/user.validator';
 import { User } from '../../models/user';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+
 
 import { environment } from '../../../environments/environment';
 import { retry, mapTo } from 'rxjs/operators';
@@ -21,13 +23,14 @@ import { Observable, timer, of} from 'rxjs';
 export class SignupComponent implements OnInit, OnDestroy {
 
   signupForm: FormGroup;
-  startBarLabel: string = "Password strength:";
+  startBarLabel: string = "Sicurezza Password:";
   strengthBarColors = ['#DD2C00', '#FFD600', '#00C853'];
   strengthBarLabels = ['(Weak)', '(Ok)', '(Strong)'];
   changeDetectorRefs :ChangeDetectorRef[] = [];
-  public user: User;
-  private subscription: Subscription;
-  private errorMessage: string | null;
+
+  user: User;
+  subscription: Subscription;
+  errorMessage: string = "";
 
   constructor(private signupService: SignupService, private changeDetectorRef:ChangeDetectorRef,
               private router : Router) {}
@@ -42,53 +45,12 @@ export class SignupComponent implements OnInit, OnDestroy {
     );
   }
 
-  checkUsernameNotTaken(fc: FormControl): Subscription {
-    
-    //if(fc.value){
-    let targetUrl = environment.API_URL + "/guest/checkUser/" + fc.value;
-    console.log(fc.value);
-    console.log(targetUrl);
-    
-    //console.log(this.signupService.ifDuplicateUsername(fc.value));
-    /*
-    return this.signupService.ifDuplicateUsername(fc.value)
-      .subscribe(
-        map(
-          bool => {
-            bool ? null : { usernameTaken: true };
-      }));
-    }
-    else
-    */
-      return null;
-
-      /*
-
-      let ob = new Observable;
-      ob.pipe(
-        delay(500),
-        map(()=>{
-          return this.signupService.ifDuplicateUsername(fc.value)
-            .pipe(
-              map(null,err=>of({usernameTaken: true}))
-            )
-            
-        }
-        )
-      )
-      return ob.subscribe();
-      */
-     //return null;
-  }
-
   checkPasswordMatch(formGroup:FormGroup){
     return formGroup.controls.password.value === formGroup.controls.passwordConfirm.value ? null : { mismatch: true };
   }
 
-  ngOnDestroy(): void {
-     if(this.subscription){
-        this.subscription.unsubscribe();
-     }
+  clearErrMess() {
+    this.errorMessage = '';
   }
 
   signupFormSubmit(): void {
@@ -96,15 +58,25 @@ export class SignupComponent implements OnInit, OnDestroy {
                           this.signupForm.controls.password.value);
     //console.log(this.user);
     if (this.signupForm.valid) {
-      this.subscription = this.signupService.register(this.user).subscribe((data) => {
-        console.log(data);
-        if (!data) {
-          this.errorMessage = "Errore nella registrazione, riprova";
-          this.changeDetectorRef.detectChanges();
+      this.subscription = this.signupService.register(this.user).subscribe(
+        response => {
+          this.router.navigate(['login']);
+        },
+        (respErr: HttpErrorResponse) => {
+          // console.log(respErr.error.error_description);
+          if(respErr.status == 409){
+            this.signupForm.reset();
+            this.errorMessage = "Username già in uso, riprova";
+          }
+          else
+            this.errorMessage = "Errore, riprova più tardi!"
         }
-        else
-          this.router.navigateByUrl('login');
-      });
+      );
     }
+  }
+
+  ngOnDestroy(): void {
+    if(this.subscription)
+       this.subscription.unsubscribe();
   }
 }

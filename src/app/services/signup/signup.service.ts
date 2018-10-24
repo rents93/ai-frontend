@@ -16,20 +16,21 @@ export class SignupService {
     //registrazione di un nuovo utente
     register(user:User){
         let targetUrl = this.basicUrl + "/guest/register";
-        console.log(targetUrl);
-        console.log(user);
+        // console.log(targetUrl);
+        // console.log(user);
         let res = this.http.post(
             targetUrl,
             user,
             {observe: 'response'}
         ).pipe(
-            retry(3),
-            map(resp => {
-                if(resp.status==201)
-                    return true;
-                else
-                    return false;
-            })
+            retry(3)
+            // ,map(resp => {
+            //     if(resp.status==201)
+            //         return true;
+            //     else
+            //         return false;
+            // })
+            ,map(resp => resp.status)   
         );
         return res;
     }
