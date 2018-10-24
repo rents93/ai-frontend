@@ -40,10 +40,9 @@ export class ArchivesComponent implements OnInit {
     if(this.purchasedArchivesSub){
       this.purchasedArchivesSub.unsubscribe();
     }
-    // if(this.deleteSub !== null && this.deleteSub !== undefined)
-    //   this.deleteSub.unsubscribe();
-     if(this.downloadSub !== null && this.downloadSub !== undefined)
-       this.downloadSub.unsubscribe();
+    if(this.downloadSub !== null && this.downloadSub !== undefined){
+      this.downloadSub.unsubscribe();
+    }
   }
 
   getOwnedNext(){
@@ -80,23 +79,7 @@ export class ArchivesComponent implements OnInit {
 
   download(filename:string){
     this.archiveService.getArchive(filename);
-    // this.downloadSub = this.archiveService.getArchive(filename)
-    //                   .subscribe((data : Response) =>{
-    //                     //console.log(data);
-    //                     this.downloadFile(data);
-    //                   },
-    //              (error) => {
-    //                console.dir(error);
-    //                alert("Error downloading the file");
-    //              }
-    //                   );
   }
-
-  // downloadFile(data: Response){
-  //   var blob = new Blob(data, { type: 'application/zip' });
-  //   var url= window.URL.createObjectURL(blob);
-  //   window.open(url);
-  // }
 
   remove(filename:string){
     let removedElement : Archive;
