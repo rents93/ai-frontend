@@ -28,7 +28,7 @@ export class LoginService {
         const httpOptions = {
             headers: new HttpHeaders({
               'Content-Type':  'application/x-www-form-urlencoded',
-              'authorization': 'Basic Zm9vQ2xpZW50SWRQYXNzd29yZDpzZWNyZXQ=' //FIXME:
+              'authorization': 'Basic Zm9vQ2xpZW50SWRQYXNzd29yZDpzZWNyZXQ='
             })
         };
 
@@ -39,25 +39,12 @@ export class LoginService {
                 httpOptions
             )
             .pipe(
-                retry(3),              
-            );
-        
-        postObs.subscribe(
-            (response) =>{
-                window.localStorage.setItem('ai-token', response.access_token);
-            });
-            
+                retry(3)             
+            );            
         return postObs;
     }
 
     logout() {
-        // remove user from local storage to log user out
-        localStorage.removeItem('ai-token');
-    }
-
-    ngOnDestroy(): void {
-        if(this.postSub){
-            this.postSub.unsubscribe();
-        }
+        window.localStorage.removeItem('ai-token');
     }
 }

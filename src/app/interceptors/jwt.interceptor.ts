@@ -20,12 +20,17 @@ export class JwtInterceptor implements HttpInterceptor {
                 }
             });
         }
-
         return next.handle(request).pipe(
-            tap(event => {}, err => {
-                if (err instanceof HttpErrorResponse)
-                    this.router.navigateByUrl("connectionError");
-            })
+            tap(event => {},
+                err => {
+                    if (err instanceof HttpErrorResponse){
+                        if (err.status === 401){
+                            alert("Sessione scaduta");
+                            this.router.navigateByUrl("login");
+                        }
+                    }
+                }
+            )
         );
     }
 }

@@ -29,17 +29,18 @@ export class SignupComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   private errorMessage: string | null;
 
-  constructor(private signupService: SignupService, private changeDetectorRef:ChangeDetectorRef, private router : Router) {
-  }
+  constructor(private signupService: SignupService, private changeDetectorRef:ChangeDetectorRef,
+              private router : Router) {}
 
   ngOnInit() {
     this.signupForm = new FormGroup({
-      username: new FormControl('', [Validators.required /*,this.checkUsernameNotTaken.bind(this)*/]),
-      password: new FormControl('', Validators.required),
-      passwordConfirm: new FormControl('', Validators.required)
-    },  [this.checkPasswordMatch/*,this.checkUsernameNotTaken.bind(this) */]);
+        username: new FormControl('', [Validators.required /*,this.checkUsernameNotTaken.bind(this)*/]),
+        password: new FormControl('', Validators.required),
+        passwordConfirm: new FormControl('', Validators.required)
+      },
+      [this.checkPasswordMatch/*,this.checkUsernameNotTaken.bind(this) */]
+    );
   }
-
 
   checkUsernameNotTaken(fc: FormControl): Subscription {
     
@@ -90,14 +91,10 @@ export class SignupComponent implements OnInit, OnDestroy {
      }
   }
 
-  signupFormSubmit(): void{
-    this.user =
-      new User(
-        this.signupForm.controls.username.value,
-        this.signupForm.controls.password.value);
-
-        //console.log(this.user);
-
+  signupFormSubmit(): void {
+    this.user = new User(this.signupForm.controls.username.value, 
+                          this.signupForm.controls.password.value);
+    //console.log(this.user);
     if (this.signupForm.valid) {
       this.subscription = this.signupService.register(this.user).subscribe((data) => {
         console.log(data);
@@ -105,12 +102,9 @@ export class SignupComponent implements OnInit, OnDestroy {
           this.errorMessage = "Errore nella registrazione, riprova";
           this.changeDetectorRef.detectChanges();
         }
-        else{
+        else
           this.router.navigateByUrl('login');
-        }
       });
     }
-
   }
-
 }
