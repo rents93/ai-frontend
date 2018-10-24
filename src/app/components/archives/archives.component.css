@@ -1,0 +1,17 @@
+mat-card-title, td {
+    text-align: center;
+}
+
+th {
+    height: 50px;
+    font-size: 120%;
+}
+
+table, th, td {
+    border: 1px groove;
+    border-collapse: collapse;
+}
+
+table {
+    width: 100%;
+}

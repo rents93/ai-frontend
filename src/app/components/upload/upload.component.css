@@ -1,0 +1,27 @@
+mat-card-title, td {
+    text-align: center;
+}
+
+.drop-zone {
+    border-style: dotted;
+    text-align: center;
+    padding: 30px;
+} 
+
+th {
+    height: 50px;
+    font-size: 120%;
+}
+
+table, th, td {
+    border: 1px groove;
+    border-collapse: collapse;
+}
+
+table {
+    width: 100%;
+}
+
+.no-border{
+    border: none;
+}

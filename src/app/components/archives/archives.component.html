@@ -1,82 +1,73 @@
 <mat-tab-group>
-  <mat-tab label="My Archive">
+    <mat-tab label="Archivi Caricati">
         <mat-card>
 
             <mat-card-title class="bold">                  
-                    My  archives
+                Archivi Caricati
             </mat-card-title>
 
             <mat-card-content>
-                <table class="table">
+                <table class="mat-elevation-z5">
                     <thead>
                         <tr>
-                            <th width="60%">Archive</th>
-                            <th width="10%">Acquisitions</th>
-                            <th width="15%">Download</th>
-                            <th width="15%">Remove</th>
+                            <th width="55%">File</th>
+                            <th width="15%">Acquistato</th>
+                            <th width="15%">Scarica</th>
+                            <th width="15%">Rimuovi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let item of ownedArchives.archives">
-                            <td style="text-align: left;">                              
+                            <td>                              
                                 <strong>{{item.filename}}</strong>
                             </td>
                             <td class="text-center">
                                 {{item.counter}}
                             </td>
                             <td>
-                                <button type="button" class="btn btn-success btn-xs" (click)="download(item.filename)">
+                                <button type="button" mat-flat-button color="primary" (click)="download(item.filename)">
                                     <span class="glyphicon glyphicon-download"></span> Download
                                 </button>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-danger btn-xs" (click)="remove(item.filename)">
+                                <button type="button" mat-flat-button color="warn" (click)="remove(item.filename)">
                                     <span class="glyphicon glyphicon-trash"></span> Remove
                                 </button>
 
                             </td>
                         </tr>
                     </tbody>
+
                 </table>
             </mat-card-content>
 
-            <mat-card-title>
-                <table>
-                    <tr>
-                        <td>
-                            <button id="element1" [disabled]="ownedArchives._links===null||ownedArchives._links.previous===null||ownedArchives._links.previous===undefined"
-                                type="button" class="btn btn-primary btn-s minbutton" (click)="getOwnedPrevious()">
-                                <span class="glyphicon glyphicon-backward"></span> Previous
-                            </button>
-                        </td>
-                        <br>
-                        <td>
-                            <button id="element2" [disabled]="ownedArchives._links===null||ownedArchives._links.next===null||ownedArchives._links.next===undefined"
-                                type="button" class="btn btn-primary btn-s minbutton" (click)="getOwnedNext()">
-                                <span class="glyphicon glyphicon-forward"></span> Next
-                            </button>
-                        </td>
-                    </tr>
-                </table>
-            </mat-card-title>
+                <button id="element1" [disabled]="ownedArchives._links===null||ownedArchives._links.previous===null||ownedArchives._links.previous===undefined"
+                    type="button" mat-raised-button (click)="getOwnedPrevious()">
+                    Previous
+                </button>
+                <button id="element2" [disabled]="ownedArchives._links===null||ownedArchives._links.next===null||ownedArchives._links.next===undefined"
+                    type="button" style="float: right" mat-raised-button (click)="getOwnedNext()">
+                    Next
+                </button>
+
         </mat-card>
     </mat-tab>
 
 
 
-  <mat-tab label="Purchased Archive">
+    <mat-tab label="Archivi Acquistati">
       <mat-card>
-          <mat-card-title class="bold">                  
-            Purchased Archives
-          </mat-card-title>
+            <mat-card-title class="bold">                  
+                Archivi Acquistati
+            </mat-card-title>
 
-          <mat-card-content>
+            <mat-card-content>
 
               <table class="table">
                   <thead>
                       <tr>
-                          <th width="70%">Archive</th>
-                          <th width="30%">Download</th>
+                          <th width="70%">File</th>
+                          <th width="30%">Scarica</th>
                       </tr>
 
                   </thead>
@@ -87,34 +78,24 @@
                               <strong>{{item.filename}}</strong>
                           </td>
                           <td nowrap>
-                              <button type="button" class="btn btn-success btn-xs" (click)="download(item.filename)">
+                              <button type="button" mat-flat-button color="primary" (click)="download(item.filename)">
                                   <span class="glyphicon glyphicon-download"></span> Download
                               </button>
                           </td>
                       </tr>
                   </tbody>
               </table>
-          </mat-card-content>
-          <mat-card-title>
-            <table>
-                <tr>
-                    <td>
-                        <button id="element1" [disabled]="!(purchasedArchives._links?.previous)"
-                            type="button" class="btn btn-primary btn-s minbutton" (click)="getPurPrevious()">
-                            <span class="glyphicon glyphicon-backward"></span> Previous
-                        </button>
-                    </td>
-                    <br>
-                    <td>
-                        <button id="element2" [disabled]="!(purchasedArchives._links?.next)"
-                            type="button" class="btn btn-primary btn-s minbutton" (click)="getPurNext()">
-                            <span class="glyphicon glyphicon-forward"></span> Next
-                        </button>
-                    </td>
-                </tr>
-            </table>
-        </mat-card-title>
+            </mat-card-content>
+            
+            <button color="primary" id="element1" [disabled]="!(purchasedArchives._links?.previous)"
+                type="button" mat-raised-button (click)="getPurPrevious()">
+                Previous
+            </button>
+            <button id="element2" [disabled]="!(purchasedArchives._links?.next)"
+                type="button" style="float: right" mat-raised-button (click)="getPurNext()">
+                Next
+            </button>
 
-      </mat-card>
-  </mat-tab>
+        </mat-card>
+    </mat-tab>
 </mat-tab-group>
