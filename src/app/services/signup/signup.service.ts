@@ -3,6 +3,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { retry } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { User } from '../../models/user';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
