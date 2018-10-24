@@ -1,31 +1,19 @@
-<style type="text/css"> 
-   :host {
-    display: flex;
-    justify-content: center;
-    margin: 10vh 0;
-  }
-
-  .mat-form-field {
-    width: 100%;
-  }
-</style>
 <mat-card>
   <form [formGroup]="signupForm" (ngSubmit)="signupFormSubmit()">
     <mat-form-field>
-      <input type="text" matInput placeholder="Username" formControlName="username" required pattern="^[a-zA-Z0-9_.-]*$">
+      <input type="text" (focus)="clearErrMess()" matInput placeholder="Username" formControlName="username" required pattern="^[a-zA-Z0-9_.-]*$">
     </mat-form-field>
 
-    <div class="ok" *ngIf="signupForm.controls.username.status === 'INVALID' && signupForm.controls.username.value != ''">
+    <!-- <div class="ok" *ngIf="signupForm.controls.username.status === 'INVALID' && signupForm.controls.username.value != ''">
       caratteri Username invalidi
-    </div>
+    </div> -->
 
-    <div class="error" *ngIf="signupForm.controls.username.errors && signupForm.controls.username.errors.usernameTaken">
+    <!-- <div class="error" *ngIf="signupForm.controls.username.errors && signupForm.controls.username.errors.usernameTaken">
       Username already taken
-    </div>
-    <br>
+    </div> -->
 
-    <mat-form-field matTooltip="Password length from  8 to 16">
-      <input type="password" matInput placeholder="Password" formControlName="password"  required minlength="8" maxlength="16">
+    <mat-form-field matTooltip="Lunghezza password da 8 a 16 caratteri">
+      <input type="password" (focus)="clearErrMess()" matInput placeholder="Password" formControlName="password" required minlength="8" maxlength="16">
     </mat-form-field>
 
     <ng2-password-strength-bar 
@@ -34,19 +22,15 @@
               [barColors]="strengthBarColors"
               [strengthLabels]="strengthBarLabels">
     </ng2-password-strength-bar>
-    <br>
     
-    <mat-form-field matTooltip="Confirm password must be equal to Password">
-      <input type="password" matInput placeholder="Confirm Password" formControlName="passwordConfirm" required validateEqual="password">
+    <mat-form-field>
+      <input type="password" (focus)="clearErrMess()" matInput placeholder="Conferma Password" formControlName="passwordConfirm" required validateEqual="password">
     </mat-form-field>
 
-    <div class="button-row">
-      <button type="submit" mat-raised-button color="primary" [disabled]='signupForm.invalid'>Sign up</button>
-    </div>
-
-    <p *ngIf="errorMessage" class="error">
-      {{ errorMessage }}
-    </p>
-
+    <button type="submit" mat-raised-button color="primary" [disabled]='signupForm.invalid'>Registrati</button>
   </form>
+  <br>
+  <mat-card-content *ngIf="errorMessage">
+    {{errorMessage}}
+  </mat-card-content>
 </mat-card>

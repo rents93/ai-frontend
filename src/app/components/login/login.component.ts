@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
               this.errorMessage = "Credenziali errate";
             }
             else
-              this.errorMessage = "Error, please try later."
+              this.errorMessage = "Errore, riprova più tardi!"
           } 
       );
   }

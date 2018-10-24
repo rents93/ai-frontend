@@ -1,0 +1,20 @@
+:host {
+  display: flex;
+  justify-content: center;
+  margin: 10vh 0;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-card {
+  text-align: center;
+  width: 18vw;
+}
+
+.mat-card-content {
+  /* display: flex; */
+  justify-content: center;
+  color: red;
+}
