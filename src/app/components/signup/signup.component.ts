@@ -16,7 +16,7 @@ import { Observable, timer, of} from 'rxjs';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: []
+  styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit, OnDestroy {
 

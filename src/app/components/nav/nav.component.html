@@ -12,7 +12,7 @@
       <a *ngIf="logged()" mat-list-item routerLink="/archives">Gestione Archivi</a>
       <a *ngIf="logged()" mat-list-item routerLink="/upload">Caricamento Archivi</a>
       <a *ngIf="!logged()" mat-list-item routerLink="/login">Login</a>
-      <a *ngIf="!logged()" mat-list-item routerLink="/signup">Registrati</a>
+      <a *ngIf="!logged()" mat-list-item routerLink="/signup">Registrazione</a>
       <a *ngIf="logged()" style="position:absolute; bottom: 0; width: 100%" mat-list-item (click)="logout()">Logout</a>
     </mat-nav-list>
   </mat-sidenav>
