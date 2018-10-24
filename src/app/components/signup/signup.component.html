@@ -1,12 +1,20 @@
-<mat-card>
-  <mat-card-title>Registrazione</mat-card-title>
+<style type="text/css"> 
+   :host {
+    display: flex;
+    justify-content: center;
+    margin: 10vh 0;
+  }
 
+  .mat-form-field {
+    width: 100%;
+  }
+</style>
+<mat-card>
   <form [formGroup]="signupForm" (ngSubmit)="signupFormSubmit()">
-    
-    <mat-form-field matTooltip="No special characters are allowed">
+    <mat-form-field>
       <input type="text" matInput placeholder="Username" formControlName="username" required pattern="^[a-zA-Z0-9_.-]*$">
     </mat-form-field>
-    <br>
+
     <div class="ok" *ngIf="signupForm.controls.username.status === 'INVALID' && signupForm.controls.username.value != ''">
       caratteri Username invalidi
     </div>

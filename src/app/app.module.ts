@@ -17,7 +17,6 @@ import { LoginService } from './services/login/login.service';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ArchivesComponent } from './components/archives/archives.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
-import { SignupComponent } from './components/signup/signup.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { AuthGuard } from './guards/auth.guard';
 import { NoAuthGuard } from './guards/no-auth.guard';
@@ -28,6 +27,7 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
 import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
 import { FileUploadModule } from "ng2-file-upload";
+import { SignupComponent } from './components/signup/signup.component';
 
 
 // config JwtHelper
@@ -44,9 +44,8 @@ export function tokenGetter(){
     LoginComponent,
     PageNotFoundComponent,
     ArchivesComponent,
+    UploadComponent,
     SignupComponent,
-    UploadComponent
-
   ],
   imports: [
     BrowserModule,
