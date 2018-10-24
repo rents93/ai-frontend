@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { tokenGetter } from '../../app.module';
-import { FileUploader } from 'ng2-file-upload';
+import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 
 
 const URL = environment.API_URL + '/user/upload';
@@ -15,6 +15,7 @@ export class UploadComponent implements OnInit {
   
   public uploader: FileUploader = null;
   public hasBaseDropZoneOver: boolean = false;
+  public upload: String = "";
 
   constructor() { }
 
@@ -31,6 +32,8 @@ export class UploadComponent implements OnInit {
                     authTokenHeader:  'authorization',
                     authToken: 'Bearer '+ token,
     });
+    this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
+    this.uploader.onErrorItem = (item, response, status, headers) => this.onErrorItem(item, response, status, headers);
     this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
 
     /* this.uploader._onErrorItem = (error) => {
@@ -38,6 +41,25 @@ export class UploadComponent implements OnInit {
       alert("Error during the upload of "+ error.file.name+".\nCheck file format, please.\n"); 
     }; */
   }
+
+  onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
+    if(status===201){
+      this.upload='ok';
+    }
+    else{
+      this.upload='error';
+    }
+  }
+
+  onErrorItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
+    if(status===418){
+      this.upload='error';
+    }
+    else{
+      this.upload='error';
+    }
+  }
+
   public fileOverBase(e:any):void {
     this.hasBaseDropZoneOver = e;
   }

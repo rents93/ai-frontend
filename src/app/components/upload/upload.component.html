@@ -19,7 +19,7 @@
 
                 <h4>Oppure seleziona il File</h4>
                 <br>
-                <input type="file" id="file" class="upload divcontent" ng2FileSelect [uploader]="uploader" multiple/>  
+                <input type="file" id="file" class="upload divcontent" ng2FileSelect [uploader]="uploader"/>  
 
             </div>
 
@@ -30,9 +30,10 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th width="60%">File</th>
+                            <th width="50%">File</th>
                             <th width="20%">Dimensione</th>
                             <th width="20%">Azioni</th>
+                            <th width="10%">Stato</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,7 +41,7 @@
                             <td>
                                 <strong>{{ item?.file?.name }}</strong>
                             </td>
-                            <td >{{ item?.file?.size/1024 | number:'.2-2' }} MB</td>
+                            <td >{{ item?.file?.size/1024/1024 | number:'.2-2' }} MB</td>
                             <td nowrap>
                                 <button type="button" mat-flat-button color="primary" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
                                     Carica
@@ -48,6 +49,10 @@
                                 <button type="button" mat-flat-button color="warn" (click)="item.remove()">
                                     Rimuovi
                                 </button>
+                            </td>
+                            <td>
+                                <span style="color: green" *ngIf="item.isSuccess">Caricato</span>
+                                <span style="color: red" *ngIf="item.isError">Errore</span>
                             </td>
                         </tr>
                     </tbody>
@@ -77,7 +82,6 @@
             </div>
 
         </div>
-
 
     </mat-card-content>
 </mat-card>
