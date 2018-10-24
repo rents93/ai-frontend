@@ -68,7 +68,7 @@ export class ArchiveService implements OnDestroy{
                 var filename = elements[l-1];
                 saveAs(blob, filename);
             }, (error) => {
-                alert("Error during the download. Retry later!");
+                alert("Errore durante il download. Riprova più tardi!");
             }
         );
     }

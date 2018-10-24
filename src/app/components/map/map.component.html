@@ -1,48 +1,52 @@
 <div class="outer">
-    Seleziona periodo:
-    <mat-form-field>
-        <input matInput [max]="endDate" [(ngModel)]="startDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="StartDate">
-        <owl-date-time #dt1 [firstDayOfWeek]="1"></owl-date-time>
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput [min]="startDate" [(ngModel)]="endDate" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" placeholder="EndDate">
-        <owl-date-time #dt2 [firstDayOfWeek]="1"></owl-date-time>
-    </mat-form-field>
-
-    <button mat-button [matMenuTriggerFor]="menu">Seleziona utenti</button>
-    <mat-menu overlapTrigger="false" #menu="matMenu" (closed)="closingUsersMenu()">
-    <button (click)="$event.stopPropagation();selectAll()" mat-menu-item>
-        Tutti
-    </button> 
-    <button (click)="$event.stopPropagation();unselectAll();" mat-menu-item>
-        Nessuno
-    </button>
-    <button (click)="$event.stopPropagation()" mat-menu-item *ngFor="let user of users">
-        <input type="checkbox" checked="true" value="{{user}}" class="checkBoxUsers">{{user}}
-        <!-- <mat-checkbox checked="true" class="checkBoxUsers">{{user}}</mat-checkbox> -->
-        <!-- <div *ngFor="let item of toDos;let index = index;trackBy:trackByIndex;">
-            <input [(ngModel)]="toDos[index]" placeholder="item">
-        </div> -->
-    </button>
-    </mat-menu>
-    <button style="margin: auto" mat-button (click)="getPositions()">Visualizza posizioni</button>
-    <div id="mapid" (leafletMapReady)="onMapReady($event)" style="height: 40vh;"></div>
     <mat-card>
-        <mat-card-content id="poly_div" style="display: none">
-                <button mat-button (click)="resetPolygon()">Resetta poligono</button>
-                <button mat-button (click)="getPositions()">Applica poligono</button>
-        </mat-card-content>      
-    <mat-card-content>#Posizioni selezionate: {{n_positions}}</mat-card-content>
-    <button mat-button (click)="selectArchives()">Mostra archivi</button>
-    <button mat-button (click)="buyArchives()">Acquista archivi</button>
+        Seleziona periodo:
+        <mat-form-field>
+            <input matInput [max]="endDate" [(ngModel)]="startDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="StartDate">
+            <owl-date-time #dt1 [firstDayOfWeek]="1"></owl-date-time>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput [min]="startDate" [(ngModel)]="endDate" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" placeholder="EndDate">
+            <owl-date-time #dt2 [firstDayOfWeek]="1"></owl-date-time>
+        </mat-form-field>
+
+        <button mat-button [matMenuTriggerFor]="menu">Seleziona utenti</button>
+        <mat-menu overlapTrigger="false" #menu="matMenu" (closed)="closingUsersMenu()">
+        <button (click)="$event.stopPropagation();selectAll()" mat-menu-item>
+            Tutti
+        </button> 
+        <button (click)="$event.stopPropagation();unselectAll();" mat-menu-item>
+            Nessuno
+        </button>
+        <button (click)="$event.stopPropagation()" mat-menu-item *ngFor="let user of users">
+            <input type="checkbox" checked="true" value="{{user}}" class="checkBoxUsers">{{user}}
+            <!-- <mat-checkbox checked="true" class="checkBoxUsers">{{user}}</mat-checkbox> -->
+            <!-- <div *ngFor="let item of toDos;let index = index;trackBy:trackByIndex;">
+                <input [(ngModel)]="toDos[index]" placeholder="item">
+            </div> -->
+        </button>
+        </mat-menu>
+        <button style="margin: auto" mat-button (click)="getPositions()">Visualizza posizioni</button>
+        <mat-card-content>#Posizioni selezionate: {{n_positions}}</mat-card-content>
     </mat-card>
+
+    <div id="mapid" (leafletMapReady)="onMapReady($event)" style="height: 40vh;"></div>
+    
+    <mat-card-content id="poly_div" style="display: none">
+            <button mat-button (click)="resetPolygon()">Resetta poligono</button>
+            <button mat-button (click)="getPositions()">Applica poligono</button>
+    </mat-card-content>      
+
     <div style="position: relative; height: 15vh">  
-    <canvas id="myChart"></canvas>
+        <canvas id="myChart"></canvas>
     </div>
+
     <mat-card>
         <mat-card-title>Archivi</mat-card-title>
+        <button mat-button (click)="selectArchives()">Mostra archivi</button>
+        <button mat-button [disabled]="!(selectedArchives.length > 0)" (click)="buyArchives()">Acquista archivi</button>
         <br>
-        <mat-card-content class="center-card">
+        <mat-card-content *ngIf="(selectedArchives.length > 0)" class="center-card">
             <table class="table">
                 <thead>
                     <tr>
@@ -65,43 +69,3 @@
         </mat-card-content>
     </mat-card>
 </div>
-
-<!-- <div id="mapid" (leafletMapReady)="onMapReady($event)" style="height: 40vh; width: 75%;"></div>
-
-<div id="poly_div" class="outer" style="display: none">
-  <button class="inner" mat-button (click)="resetPolygon()" style="display:inline-block">Resetta poligono</button>
-  <button class="inner" mat-button (click)="getPositions()" style="display:inline-block">Applica poligono</button>
-</div>
-
-<mat-card style="width: 75%">
-  <mat-card-content>#Posizioni selezionate: {{n_positions}}</mat-card-content>
-  <button mat-button (click)="selectArchives()">Mostra archivi</button>
-  <button mat-button (click)="buyArchives()">Acquista archivi</button>
-</mat-card>
-<div style="position: relative; height: 15vh; width: 75%;">  
-  <canvas id="myChart"></canvas>
-</div>
-
-<mat-card-title>Archivi</mat-card-title>
-<br>
-<mat-card-content class="center-card">
-    <table class="table">
-        <thead>
-            <tr>
-                <th width="70%">Archive</th>
-                <th width="30%">Owned</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let archive of selectedArchives">
-                <td>
-                    <strong>{{archive.filename}}</strong>
-
-                </td>
-                <td class="text-center">
-                    {{archive.purchased}}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</mat-card-content> -->

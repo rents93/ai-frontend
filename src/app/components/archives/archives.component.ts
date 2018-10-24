@@ -104,7 +104,7 @@ export class ArchivesComponent implements OnInit {
                        (error) => {
                          //se ho avuto errore riaggiungo l'elemento nella lista
                          this.ownedArchives.archives.push(removedElement);
-                         alert("Server error. Unable to delete " + filename)
+                         alert("Server error. Impossibile cancellare " + filename)
                        })
 
   }

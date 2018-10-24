@@ -31,7 +31,7 @@ export class MapComponent implements OnInit, OnDestroy {
   startDate = new Date(2018, 1, 12, 10, 30);
   endDate = new Date();
   users: String[];
-  checkedUsers: String[];
+  checkedUsers: String[] = [];
   boundsPolygon = [ ];
 
   //subcription
@@ -104,10 +104,10 @@ export class MapComponent implements OnInit, OnDestroy {
     this.usersSub = this.mapService.getUsers()
                 .subscribe((data) =>{
                     this.users = data;
-
+                    this.checkedUsers = data;
+                    //lo metto qui perchè non posso chiedere le posizioni finche non ho gli utenti
+                    this.getPositions();
                 });
-
-    this.getPositions();        
   }
 
   initializeMap(){
@@ -187,6 +187,11 @@ export class MapComponent implements OnInit, OnDestroy {
 
   getPositions(){
     let bounds;
+    if (this.checkedUsers.length==0){
+
+      alert("Selezionare almeno un utente!");
+      return;
+    }
     if (this.polyPoint.length >=3)
       bounds = this.formatPolygon(this.latlngToNumber(this.polyPoint));
     else
@@ -207,6 +212,7 @@ export class MapComponent implements OnInit, OnDestroy {
       if(this.layerOfMarkers !== null && this.layerOfMarkers !== undefined){
         this.mymap.removeLayer(this.layerOfMarkers);
       }
+      this.selectedArchives = [];
       this.getUserColors(data);
       this.displayPositions(data);
       this.displayTime(data);
@@ -275,6 +281,7 @@ export class MapComponent implements OnInit, OnDestroy {
     // this.myChart.update();
 
     this.ctx = <HTMLCanvasElement> document.getElementById("myChart");
+    this.myChart.destroy();
     this.myChart = new C.Chart(this.ctx, {
       type: 'line',
       options: {
@@ -294,6 +301,7 @@ export class MapComponent implements OnInit, OnDestroy {
         },      
       }
     })
+    // this.myChart.data
     for (let i=0; i < userIndexMap.length; i++){
       this.myChart.data.datasets.push({
         label: userIndexMap[i],
@@ -312,18 +320,6 @@ export class MapComponent implements OnInit, OnDestroy {
     this.myChart.update();
   }
 
-  // getPolygonWellFormatted() : any[] {
-  //   if(this.vertices >= 2){
-  //     //console.log("Polygon");
-  //     //first point and last point MUST be equal (closed polygon)
-  //     return this.formatPolygon(this.polygonTest);
-  //   }
-  //   else{
-  //     //console.log("Bounds");
-  //     return this.formatPolygon(this.boundsPolygon);
-  //   }
-  // }
-
   //AGGIUNGE IL PUNTO INIZIALE ALLA FINE PER CHIUDERE IL POLIGONO
   formatPolygon(polygon : any[]) : any[]{
     let polygonWellFormatted = [];
@@ -335,9 +331,6 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   removeSeconds(data: number): number{
-    // data.setMilliseconds(0);
-    // data.setSeconds(0);
-    // return data;
     return parseInt(data.toString().slice(0, -3));
   }
 
@@ -345,7 +338,6 @@ export class MapComponent implements OnInit, OnDestroy {
     let users = document.getElementsByClassName("checkBoxUsers");
     for (var i = 0; i < users.length; i++) {
       let user = <HTMLInputElement> users[i];
-      // user.checked = true;
       user.checked = true;
     }
   }
@@ -405,7 +397,7 @@ export class MapComponent implements OnInit, OnDestroy {
                               this.selectedArchives = [];
                             },
                             (error) => {
-                                alert("Transaction Error!");
+                                alert("Transazione fallita!");
                                 console.dir(error);   
                             });
   }
