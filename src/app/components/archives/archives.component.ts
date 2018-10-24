@@ -8,7 +8,7 @@ import { NavigableArchive } from '../../models/navigablearchive';
 @Component({
   selector: 'app-archives',
   templateUrl: './archives.component.html',
-  styleUrls: []
+  styleUrls: ['./archives.component.css']
 })
 export class ArchivesComponent implements OnInit {
 
