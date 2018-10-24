@@ -1,12 +1,11 @@
 :host {
     display: flex;
     justify-content: center;
-    margin: 20vh 0;
+    margin: 10vh 0;
 }
 
 .mat-form-field {
     width: 100%;
-    color: green;
 }
 
 /* .inner {
