@@ -32,38 +32,49 @@ export class SignupService {
        //return boolObs;
     }
 
-    register(user:User){
+    // register(user:User){
+    //     let targetUrl = this.basicUrl + "/guest/register";
+    //     console.log("targetURL:" +targetUrl);
+    //     console.log("user "+user);
+    //     let res : Observable<any> = this.http.post(
+    //         targetUrl,
+    //         user            
+    //     );//.pipe(retry(3));
+    //     console.log(res);
+    //     let obs : Observable<any> = res.pipe(
+    //         map(
+    //             resp => {
+    //                 if(resp.status===201)
+    //                     return true;
+    //                 else
+    //                     return false;
+    //             }
+    //     ), catchError(
+    //         (e)=>{
+    //             return of(false);
+    //         }
+    //     ));
+    //     return obs;
+    //   }
+
+      register(user:User){
         let targetUrl = this.basicUrl + "/guest/register";
         console.log(targetUrl);
         console.log(user);
-
-        // const httpOptions = {
-        //     headers: new HttpHeaders({
-        //       'Content-Type':  'application/json'
-        //     })
-        // };
-
-        return this.http.post(
-                targetUrl,
-                user
-                //httpOptions
-            )
-            .pipe(retry(3))
-            .map(
-                (resp: Response) => {
-                    if(resp.status===201){
-                        return true;
-                    }
-                    else{
-                        return false;
-                    }
-                }
-            )
-            .catch(
-                (e)=>{
-                    return of(false);
-                }
-            );
+        let res = this.http.post(
+            targetUrl,
+            user,
+            {observe: 'response'}
+        ).pipe(
+            retry(3),
+            map(resp => {
+                if(resp.status==201)
+                    return true;
+                else
+                    return false;
+            })
+        );
+        return res;
       }
       
     //   activate(username : string, code : string){

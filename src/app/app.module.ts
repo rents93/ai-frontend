@@ -17,7 +17,6 @@ import { LoginService } from './services/login/login.service';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ArchivesComponent } from './components/archives/archives.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
-import { HomeComponent } from './components/home/home.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { AuthGuard } from './guards/auth.guard';
@@ -45,7 +44,6 @@ export function tokenGetter(){
     LoginComponent,
     PageNotFoundComponent,
     ArchivesComponent,
-    HomeComponent,
     SignupComponent,
     UploadComponent
 
