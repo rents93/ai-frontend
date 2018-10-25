@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { tokenGetter } from '../../app.module';
+// import { tokenGetter } from '../../app.module';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +11,8 @@ export class JwtService {
 
     //controlla se l'utente è autenticato
     ifLogged(){
-        let token = tokenGetter();
+        // let token = tokenGetter();
+        let token = window.localStorage.getItem('ai-token');
         if(token && !this.ifTokenExpired(token))
             return true;
         else

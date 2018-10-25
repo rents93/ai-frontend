@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { tokenGetter } from '../../app.module';
 import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 
 

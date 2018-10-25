@@ -14,7 +14,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class NavComponent implements OnInit {
 
-  title: String = 'Mercato delle posizioni';
+  title: String = 'Buy&Sell Position';
   nome_utente: String = "";
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)

@@ -1,12 +1,9 @@
 import { Component, OnInit, Input, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { tileLayer, latLng, circle, polygon, marker, icon, geoJSON, point, bounds, LeafletMouseEvent } from 'leaflet';
+import { LeafletMouseEvent } from 'leaflet';
 import * as L from 'leaflet';
 import { Subscription, Subject } from 'rxjs';
 import { DateTimeAdapter } from 'ng-pick-datetime';
 import { MapService } from '../../services/map/map.service';
-import { forEach } from '@angular/router/src/utils/collection';
-import { MatCheckbox, MatInput, MAT_DIALOG_SCROLL_STRATEGY_PROVIDER_FACTORY } from '@angular/material';
-import { CheckboxControlValueAccessor } from '@angular/forms';
 import { QueryObj } from '../../models/queryObj';
 import { QueryResult } from '../../models/QueryResult/queryResult';
 import { Shape } from '../../models/shape';
@@ -22,13 +19,13 @@ export class MapComponent implements OnInit, OnDestroy {
 
   mymap: L.Map;
   mapOptions : L.MapOptions = {
-    center: [45.075387, 7.657035],
+    center: [45.4641258,9.1901455],
     zoom: 14
   }
 
   //E poi DA RIMETTERE 
-  // startDate = new Date();
-  startDate = new Date(2018, 1, 12, 10, 30);
+  startDate = new Date();
+  // startDate = new Date(2018, 1, 1, 10, 30);
   endDate = new Date();
   users: String[];
   checkedUsers: String[] = [];
@@ -57,10 +54,7 @@ export class MapComponent implements OnInit, OnDestroy {
   chartPointArray: C.ChartPoint[];
 
   //acquisto archivi
-  selectedArchives: ArchiveTransaction[] = [];
-
-  pippo : string;
-  
+  selectedArchives: ArchiveTransaction[] = [];  
 
   constructor(dateTimeAdapter: DateTimeAdapter<any>,
                private mapService: MapService,
@@ -68,8 +62,8 @@ export class MapComponent implements OnInit, OnDestroy {
               ) {
     dateTimeAdapter.setLocale('it-IT');
 
-    //di default guardo il periodo degli ultimi 3 giorni
-    // this.startDate.setDate(this.startDate.getDate()-3);
+    //di default guardo il periodo degli ultimi 5 giorni
+    this.startDate.setDate(this.startDate.getDate()-5);
   }
 
   ngOnInit() {
@@ -107,7 +101,6 @@ export class MapComponent implements OnInit, OnDestroy {
                 .subscribe((data) =>{
                     this.users = data;
                     this.checkedUsers = data;
-                    //lo metto qui perchè non posso chiedere le posizioni finche non ho gli utenti
                     this.getPositions();
                 });
   }
