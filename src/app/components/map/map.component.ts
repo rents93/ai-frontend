@@ -58,6 +58,8 @@ export class MapComponent implements OnInit, OnDestroy {
 
   //acquisto archivi
   selectedArchives: ArchiveTransaction[] = [];
+
+  pippo : string;
   
 
   constructor(dateTimeAdapter: DateTimeAdapter<any>,
