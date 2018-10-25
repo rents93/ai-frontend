@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  //manda il form al server
   loginFormSubmit(): void{
     if(this.loginForm.invalid){
       return;
