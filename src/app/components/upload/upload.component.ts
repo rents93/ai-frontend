@@ -51,7 +51,7 @@ export class UploadComponent implements OnInit {
   }
 
   onErrorItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
-    if(status===418){
+    if(status===400){
       this.upload='error';
     }
     else{
