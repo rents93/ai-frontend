@@ -87,7 +87,7 @@
               </table>
             </mat-card-content>
             
-            <button color="primary" id="element1" [disabled]="!(purchasedArchives._links?.previous)"
+            <button id="element1" [disabled]="!(purchasedArchives._links?.previous)"
                 type="button" mat-raised-button (click)="getPurPrevious()">
                 Previous
             </button>
