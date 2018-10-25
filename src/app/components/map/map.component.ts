@@ -208,7 +208,6 @@ export class MapComponent implements OnInit, OnDestroy {
                                                               this.removeSeconds(this.endDate.getTime()))
     .subscribe((data : QueryResult) => {
       //console.dir(data);
-      //SEMBREREBBE UNA CALLBACK
       if(this.layerOfMarkers !== null && this.layerOfMarkers !== undefined){
         this.mymap.removeLayer(this.layerOfMarkers);
       }
