@@ -21,7 +21,7 @@ export class NoAuthGuard implements CanActivate {    // path without guards
         else{
             // have token, redirect to user domain
             canAccess = false;
-            this.router.navigateByUrl('home');            
+            this.router.navigateByUrl('map');            
         }
 
         return canAccess;
