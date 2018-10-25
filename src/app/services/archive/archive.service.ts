@@ -22,6 +22,7 @@ export class ArchiveService implements OnDestroy{
     archivesAddress : String = environment.API_URL+"/user/archives";
     ownedArchiveParam : String = "?ownership=self";
     purchasedArchiveParam : String = "?ownership=purchased";
+
     constructor(private client : HttpClient, private http : Http) {
 
     }
@@ -29,23 +30,27 @@ export class ArchiveService implements OnDestroy{
     ngOnInit() {
     }
 
-
+    //ottieni archivi personali dal server
     getOwnedArchives(page:number,size:number) : Observable<NavigableArchive>{
         return this.client.get<NavigableArchive>(this.archivesAddress+""+this.ownedArchiveParam+"&page="+page+"&size="+size).pipe(retry(3));
     }
 
+    //ottieni archivi personali dal server
     getPurchasedArchives(page:number,size:number) : Observable<NavigableArchive>{
         return this.client.get<NavigableArchive>(this.archivesAddress+""+this.purchasedArchiveParam+"&page="+page+"&size="+size).pipe(retry(3));
     }
 
+    //visualizza i 10 archivi successivi
     navigateNext(nav:NavigableArchive):Observable<NavigableArchive>{
         return this.client.get<NavigableArchive>(nav._links.next.href).pipe(retry(3));
     }
 
+    //visualizza i 10 archivi precedenti
     navigateBack(nav:NavigableArchive):Observable<NavigableArchive>{
       return this.client.get<NavigableArchive>(nav._links.previous.href).pipe(retry(3));
     }
 
+    //scarica il file
     getArchive(filename:string){
         let body : String[] = [];
         body.push(filename);

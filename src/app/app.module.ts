@@ -58,9 +58,6 @@ export function tokenGetter(){
     LayoutModule,
     LeafletModule,
     HttpClientModule,
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
     AppRoutingModule,
     CustomMaterialModule,
     OwlDateTimeModule, 

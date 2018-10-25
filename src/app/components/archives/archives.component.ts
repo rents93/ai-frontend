@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ArchiveService } from '../../services/archive/archive.service';
 //import { Subscription } from 'rxjs/Subscription';
@@ -21,14 +21,13 @@ export class ArchivesComponent implements OnInit {
   .subscribe( (archive) => {
     this.purchasedArchives = archive;
   });
-   deleteSub : Subscription;
-   downloadSub : Subscription;
+  deleteSub : Subscription;
+  downloadSub : Subscription;
   ownedArchives : NavigableArchive = new NavigableArchive([],null);
   purchasedArchives : NavigableArchive = new NavigableArchive([],null);
   
-   changeDetectorRefs :ChangeDetectorRef[] = [];
   
-  constructor(private archiveService: ArchiveService, private changeDetectorRef:ChangeDetectorRef) { }
+  constructor(private archiveService: ArchiveService) { }
 
   ngOnInit() {
   }
@@ -40,11 +39,12 @@ export class ArchivesComponent implements OnInit {
     if(this.purchasedArchivesSub){
       this.purchasedArchivesSub.unsubscribe();
     }
-    if(this.downloadSub !== null && this.downloadSub !== undefined){
+    if(this.downloadSub){
       this.downloadSub.unsubscribe();
     }
   }
 
+  //visualizza i 10 archivi successivi tra quelli posseduti
   getOwnedNext(){
     this.ownedArchivesSub = this.archiveService.navigateNext(this.ownedArchives)
                               .subscribe( (archive) => {
@@ -53,6 +53,7 @@ export class ArchivesComponent implements OnInit {
                               } );
   }
 
+  //visualizza i 10 archivi precedenti tra quelli posseduti
   getOwnedPrevious(){
     this.ownedArchivesSub = this.archiveService.navigateBack(this.ownedArchives)
                               .subscribe( (archive) => {
@@ -61,6 +62,7 @@ export class ArchivesComponent implements OnInit {
                               } );
   }
 
+  //visualizza i 10 archivi successivi tra quelli acquistati
   getPurNext(){
     this.ownedArchivesSub = this.archiveService.navigateNext(this.purchasedArchives)
                               .subscribe( (archive) => {
@@ -69,6 +71,7 @@ export class ArchivesComponent implements OnInit {
                               } );
   }
 
+  //visualizza i 10 archivi precedenti tra quelli acquistati
   getPurPrevious(){
     this.ownedArchivesSub = this.archiveService.navigateBack(this.purchasedArchives)
                               .subscribe( (archive) => {
@@ -77,10 +80,12 @@ export class ArchivesComponent implements OnInit {
                               } );
   }
 
+  //scarica il file
   download(filename:string){
     this.archiveService.getArchive(filename);
   }
 
+  //rimuovi il file
   remove(filename:string){
     let removedElement : Archive;
     //rimozione preventiva dell'elemento dalla lista
@@ -98,7 +103,6 @@ export class ArchivesComponent implements OnInit {
                               .subscribe( (navarchive) => {
                                                 //console.dir(navarchive);
                                                 this.ownedArchives=navarchive;
-                                                this.changeDetectorRef.detectChanges();
                               } );
                         },
                        (error) => {

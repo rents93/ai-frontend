@@ -24,12 +24,6 @@ export class SignupService {
             {observe: 'response'}
         ).pipe(
             retry(3)
-            // ,map(resp => {
-            //     if(resp.status==201)
-            //         return true;
-            //     else
-            //         return false;
-            // })
             ,map(resp => resp.status)   
         );
         return res;

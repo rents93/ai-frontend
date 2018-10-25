@@ -4,16 +4,8 @@
       <input type="text" (focus)="clearErrMess()" matInput placeholder="Username" formControlName="username" required pattern="^[a-zA-Z0-9_.-]*$">
     </mat-form-field>
 
-    <!-- <div class="ok" *ngIf="signupForm.controls.username.status === 'INVALID' && signupForm.controls.username.value != ''">
-      caratteri Username invalidi
-    </div> -->
-
-    <!-- <div class="error" *ngIf="signupForm.controls.username.errors && signupForm.controls.username.errors.usernameTaken">
-      Username already taken
-    </div> -->
-
-    <mat-form-field matTooltip="Lunghezza password da 8 a 16 caratteri">
-      <input type="password" (focus)="clearErrMess()" matInput placeholder="Password" formControlName="password" required minlength="8" maxlength="16">
+    <mat-form-field>
+      <input type="password" (focus)="clearErrMess()" matInput placeholder="Password" formControlName="password" required minlength="4" maxlength="16">
     </mat-form-field>
 
     <ng2-password-strength-bar 

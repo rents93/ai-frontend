@@ -14,6 +14,7 @@ export class LoginService {
         this.basicUrl = environment.API_URL;
     }
 
+    //fa il login sul server
     login(username: string, password: string) {
         let targetUrl = this.basicUrl + "/oauth/token";
 

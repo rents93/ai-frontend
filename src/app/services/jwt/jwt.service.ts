@@ -9,6 +9,7 @@ export class JwtService {
 
     constructor(private jwtHelperService: JwtHelperService) { }
 
+    //controlla se l'utente è autenticato
     ifLogged(){
         let token = tokenGetter();
         if(token && !this.ifTokenExpired(token))
@@ -17,6 +18,7 @@ export class JwtService {
             return false;    
     }
     
+    //controlla se token scaduto
     ifTokenExpired(token: string): boolean{
         let expireTime: number;
         let nowTime: number;
@@ -37,7 +39,8 @@ export class JwtService {
             return false;
         }
     }
-  
+    
+    //scadenza token
     getTokenExpireTime(token: string): number | null{
         let jsonToken: any;
 
@@ -55,6 +58,7 @@ export class JwtService {
         return jsonToken.exp;
     }
 
+    //leggo username dal token
     getTokenUsername(token: string){
         let jsonToken: any;
 
@@ -71,6 +75,7 @@ export class JwtService {
         return jsonToken.user_name;
     }
 
+    //leggo ruoli utente dal token
     getTokenRoles(token : string): any[]{
         let jsonToken: any;
 
